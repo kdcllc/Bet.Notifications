@@ -1,0 +1,70 @@
+<Project>
+
+	<!-- Reference for the msbuild tags: https://docs.microsoft.com/en-us/dotnet/core/tools/csproj -->
+	<PropertyGroup>
+		<MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<NetCoreVersion>3.1.*</NetCoreVersion>
+		<BetCommonVersion>4.0.*</BetCommonVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
+		<NetCoreVersion>5.0.*</NetCoreVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'netstandard2.1'">
+		<NetCoreVersion>6.0.*</NetCoreVersion>
+	</PropertyGroup>
+
+	<ItemGroup Label="Libraries">
+		<PackageReference Update="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.*" />
+		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.Extensions.Hosting" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Bet.Extensions.Options" Version="$(BetCommonVersion)" />
+		<PackageReference Update="Microsoft.Extensions.Logging" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Bet.BuildingBlocks.Domain.Abstractions" Version="1.0.4" />
+		<PackageReference Update="EasyKeys.Extensions" Version="1.1.7" />
+		<PackageReference Update="MailKit" Version="2.15.0" />
+	</ItemGroup>
+
+	<ItemGroup Label="Unit Tests">
+		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+		<PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Moq" Version="4.16.1" />
+		<PackageReference Update="xunit" Version="2.4.1" />
+		<PackageReference Update="xunit.runner.visualstudio" Version="2.4.3" PrivateAssets="All" />
+		<PackageReference Update="coverlet.collector" Version="3.1.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup Label="SourceLink">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup Label="Analyzers">
+		<PackageReference Include="Bet.CodeAnalyzers" Version="1.0.12">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Bet.EditorConfig" Version="1.0.12">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="AsyncFixer" Version="1.5.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="../../img/icon.png" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
+
+</Project>

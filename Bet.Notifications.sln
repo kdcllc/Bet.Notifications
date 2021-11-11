@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31903.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bet.Notifications.Abstractions", "src\Bet.Notifications.Abstractions\Bet.Notifications.Abstractions.csproj", "{BD7FEA7C-35DE-420D-990D-390A21F2B11B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bet.Notifications.UnitTest", "test\Bet.Notifications.UnitTest\Bet.Notifications.UnitTest.csproj", "{64EF765C-76C8-4238-BEBA-835D53A9E838}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{072166FA-5698-4EC3-9911-8F9CC8B36125}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5203584F-5252-4676-8FD7-5AD8364EC76F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bet.Notifications.SendGrid", "src\Bet.Notifications.SendGrid\Bet.Notifications.SendGrid.csproj", "{63502B85-18F3-4399-9F82-8648733A0BAB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bet.Notifications.Razor", "src\Bet.Notifications.Razor\Bet.Notifications.Razor.csproj", "{6FE2098A-EA35-4B4D-8F7A-2B8E4181A78A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bet.Notifications", "src\Bet.Notifications\Bet.Notifications.csproj", "{EAA9D2B6-3CE9-4A4B-BA9F-37DD9A741E9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{81BE58EA-6FDC-4E05-AC3E-10C4AD0E1A73}"
+	ProjectSection(SolutionItems) = preProject
+		build\dependencies.props = build\dependencies.props
+		build\settings.props = build\settings.props
+		build\sources.props = build\sources.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bet.Notifications.Worker", "src\Bet.Notifications.Worker\Bet.Notifications.Worker.csproj", "{8DA2EB4F-B063-452B-8E26-88E229584D5D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD7FEA7C-35DE-420D-990D-390A21F2B11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD7FEA7C-35DE-420D-990D-390A21F2B11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD7FEA7C-35DE-420D-990D-390A21F2B11B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD7FEA7C-35DE-420D-990D-390A21F2B11B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64EF765C-76C8-4238-BEBA-835D53A9E838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64EF765C-76C8-4238-BEBA-835D53A9E838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64EF765C-76C8-4238-BEBA-835D53A9E838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64EF765C-76C8-4238-BEBA-835D53A9E838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63502B85-18F3-4399-9F82-8648733A0BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63502B85-18F3-4399-9F82-8648733A0BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63502B85-18F3-4399-9F82-8648733A0BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63502B85-18F3-4399-9F82-8648733A0BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE2098A-EA35-4B4D-8F7A-2B8E4181A78A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE2098A-EA35-4B4D-8F7A-2B8E4181A78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE2098A-EA35-4B4D-8F7A-2B8E4181A78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE2098A-EA35-4B4D-8F7A-2B8E4181A78A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAA9D2B6-3CE9-4A4B-BA9F-37DD9A741E9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA9D2B6-3CE9-4A4B-BA9F-37DD9A741E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA9D2B6-3CE9-4A4B-BA9F-37DD9A741E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA9D2B6-3CE9-4A4B-BA9F-37DD9A741E9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DA2EB4F-B063-452B-8E26-88E229584D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DA2EB4F-B063-452B-8E26-88E229584D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DA2EB4F-B063-452B-8E26-88E229584D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DA2EB4F-B063-452B-8E26-88E229584D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD7FEA7C-35DE-420D-990D-390A21F2B11B} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
+		{64EF765C-76C8-4238-BEBA-835D53A9E838} = {5203584F-5252-4676-8FD7-5AD8364EC76F}
+		{63502B85-18F3-4399-9F82-8648733A0BAB} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
+		{6FE2098A-EA35-4B4D-8F7A-2B8E4181A78A} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
+		{EAA9D2B6-3CE9-4A4B-BA9F-37DD9A741E9B} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
+		{8DA2EB4F-B063-452B-8E26-88E229584D5D} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06EF2AE1-06B9-4D9B-AEA8-BE60D1DC63E3}
+	EndGlobalSection
+EndGlobal
