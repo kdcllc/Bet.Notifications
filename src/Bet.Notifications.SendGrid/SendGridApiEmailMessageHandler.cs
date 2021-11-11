@@ -11,65 +11,65 @@ using SendGridAttachment = SendGrid.Helpers.Mail.Attachment;
 
 namespace Bet.Notifications.SendGrid;
 
-public class SendGridSender : ISender
+public class SendGridApiEmailMessageHandler : IEmailMessageHandler
 {
     private readonly SendGridOptions _options;
 
-    public SendGridSender(string name, IOptions<SendGridOptions> options)
+    public SendGridApiEmailMessageHandler(string name, IOptionsMonitor<SendGridOptions> optionsMonitor)
     {
         Name = name;
-        _options = options.Value;
+        _options = optionsMonitor.Get(name);
     }
 
     public string Name { get; }
 
-    public async Task<NotificationResult> SendAsync(IEmail email, CancellationToken? cancellation = null)
+    public async Task<NotificationResult> SendAsync(EmailMessage email, CancellationToken? cancellation = null)
     {
         var sendGridClient = new SendGridClient(_options.ApiKey);
 
         var mailMessage = new SendGridMessage();
         mailMessage.SetSandBoxMode(_options.IsSandBoxMode);
 
-        mailMessage.SetFrom(ConvertAddress(email.Message.From));
+        mailMessage.SetFrom(ConvertAddress(email.From));
 
-        if (email.Message.To.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
+        if (email.To.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
         {
-            mailMessage.AddTos(email.Message.To.Select(ConvertAddress).ToList());
+            mailMessage.AddTos(email.To.Select(ConvertAddress).ToList());
         }
 
-        if (email.Message.Cc.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
+        if (email.Cc.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
         {
-            mailMessage.AddCcs(email.Message.Cc.Select(ConvertAddress).ToList());
+            mailMessage.AddCcs(email.Cc.Select(ConvertAddress).ToList());
         }
 
-        if (email.Message.Bcc.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
+        if (email.Bcc.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
         {
-            mailMessage.AddBccs(email.Message.Bcc.Select(ConvertAddress).ToList());
+            mailMessage.AddBccs(email.Bcc.Select(ConvertAddress).ToList());
         }
 
-        if (email.Message.ReplyTo.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
+        if (email.ReplyTo.Any(a => !string.IsNullOrWhiteSpace(a.Email)))
         {
             // SendGrid does not support multiple ReplyTo addresses
-            mailMessage.SetReplyTo(email.Message.ReplyTo.Select(ConvertAddress).First());
+            mailMessage.SetReplyTo(email.ReplyTo.Select(ConvertAddress).First());
         }
 
-        mailMessage.SetSubject(email.Message.Subject);
+        mailMessage.SetSubject(email.Subject);
 
-        if (email.Message.Headers.Any())
+        if (email.Headers.Any())
         {
-            mailMessage.AddHeaders(email.Message.Headers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+            mailMessage.AddHeaders(email.Headers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
         }
 
-        if (email.Message.IsHtml)
+        if (email.IsHtml)
         {
-            mailMessage.HtmlContent = email.Message.Body;
+            mailMessage.HtmlContent = email.Body;
         }
         else
         {
-            mailMessage.PlainTextContent = email.Message.Body;
+            mailMessage.PlainTextContent = email.Body;
         }
 
-        switch (email.Message.Priority)
+        switch (email.Priority)
         {
             case Priority.High:
 
@@ -99,14 +99,14 @@ public class SendGridSender : ISender
                 break;
         }
 
-        if (!string.IsNullOrEmpty(email.Message.PlainTextAlternativeBody))
+        if (!string.IsNullOrEmpty(email.PlainTextAlternativeBody))
         {
-            mailMessage.PlainTextContent = email.Message.PlainTextAlternativeBody;
+            mailMessage.PlainTextContent = email.PlainTextAlternativeBody;
         }
 
-        if (email.Message.Attachments.Any())
+        if (email.Attachments.Any())
         {
-            foreach (var attachment in email.Message.Attachments)
+            foreach (var attachment in email.Attachments)
             {
                 var sendGridAttachment = await ConvertAttachmentAsync(attachment);
                 mailMessage.AddAttachment(

@@ -1,4 +1,7 @@
-﻿using Bet.Notifications.Abstractions.Smtp;
+﻿using System.Dynamic;
+
+using Bet.Notifications.Abstractions.Smtp;
+using Bet.Notifications.Worker.Models;
 
 namespace Bet.Notifications.Worker;
 
@@ -6,19 +9,19 @@ public class Main : IMain
 {
     private readonly ILogger<Main> _logger;
     private readonly IHostApplicationLifetime _applicationLifetime;
-    private readonly IEnumerable<IEmail> _emails;
+    private readonly IEnumerable<IEmailConfigurator> _emailConfigurators;
 
     public IConfiguration Configuration { get; set; }
 
     public Main(
         IHostApplicationLifetime applicationLifetime,
         IConfiguration configuration,
-        IEnumerable<IEmail> emails,
+        IEnumerable<IEmailConfigurator> emailConfigurators,
         ILogger<Main> logger)
     {
         _applicationLifetime = applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime));
         Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _emails = emails;
+        _emailConfigurators = emailConfigurators;
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -31,15 +34,29 @@ public class Main : IMain
 
         var cancellationToken = _applicationLifetime.ApplicationStopping;
 
-        var replaceEmail = _emails.FirstOrDefault(x => x.Name == "replace");
+        var repl = _emailConfigurators.First(x => x.Name == Notifications.Replace);
 
-        var template = "Shalom ##Name##";
+        await repl.To("to@email.com")
+                          .Subject("This is test for replace template renderer")
+                          .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" })
+                          .SendAsync(cancellationToken);
 
-        var email = replaceEmail?.To("to@email.com")
-                          .Subject("This is test")
-                          .UsingTemplate(template, new { Name = "John the Immerser" });
+        var razorDirectory = _emailConfigurators.First(x => x.Name == Notifications.RazorDirectory);
+        var template = @"
+                        @{
+	                        Layout = ""./Views/Shared/_Layout.cshtml"";
+                        }
+                        sup @Model.Name here is a list @foreach(var i in Model.Numbers) { @i }";
 
-        await email?.SendAsync(cancellationToken);
+        dynamic viewBag = new ExpandoObject();
+        viewBag.Title = "Hello!";
+        var model = new ViewModelWithViewBag { Name = "LUKE", Numbers = new[] { "1", "2", "3" }, ViewBag = viewBag };
+
+        await razorDirectory
+            .To("email@gmail.com")
+            .Subject("This is test for Razor Directory with Template")
+            .UsingTemplate(template, model)
+            .SendAsync(cancellationToken);
 
         return 0;
     }

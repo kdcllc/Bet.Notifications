@@ -25,7 +25,7 @@ public class UnitTests
     [Fact]
     public void Split_Address_Test()
     {
-        var email = Email
+        var email = EmailConfigurator
         .From("test@test.com")
         .To("james@test.com;john@test.com", "James 1;John 2");
 
@@ -41,7 +41,7 @@ public class UnitTests
     {
         var template = "Shalom ##Name##";
 
-        var email = Email
+        var email = EmailConfigurator
             .From("from@email.com")
             .To("to@email.com")
             .Subject("Test message")

@@ -2,44 +2,45 @@
 using System.Text;
 
 using Bet.Notifications.Abstractions.TemplateRenderers;
+using Bet.Notifications.Razor.Options;
+
+using Microsoft.Extensions.Options;
 
 using RazorLight;
-using RazorLight.Razor;
 
 namespace Bet.Notifications.Razor;
 
-public class RazorRenderer : ITemplateRenderer
+public class RazorTemplateRenderer : ITemplateRenderer
 {
     private readonly RazorLightEngine _engine;
 
-    public RazorRenderer(string name, string? root = null)
+    public RazorTemplateRenderer(IOptionsMonitor<RazorRendererOptions> optionsMonitor) : this(string.Empty, optionsMonitor)
     {
-        Name = name;
-
-        _engine = new RazorLightEngineBuilder()
-                    .UseFileSystemProject(root ?? Directory.GetCurrentDirectory())
-                    .UseMemoryCachingProvider()
-                    .Build();
     }
 
-    public RazorRenderer(string name, RazorLightProject project)
+    public RazorTemplateRenderer(string name, IOptionsMonitor<RazorRendererOptions> optionsMonitor)
     {
         Name = name;
 
-        _engine = new RazorLightEngineBuilder()
-                    .UseProject(project)
+        var builder = new RazorLightEngineBuilder();
+        var options = optionsMonitor.Get(name);
+
+        if (!string.IsNullOrEmpty(options.RootDirectory))
+        {
+            builder.UseFileSystemProject(options.RootDirectory);
+        }
+        else if (options.Project != null)
+        {
+            builder.UseProject(options.Project);
+        }
+        else if (options.EmbeddedResourceRootType != null)
+        {
+            builder.UseEmbeddedResourcesProject(options.EmbeddedResourceRootType);
+        }
+
+        _engine = builder
                     .UseMemoryCachingProvider()
                     .Build();
-    }
-
-    public RazorRenderer(string name, Type embeddedResRootType)
-    {
-        Name = name;
-
-        _engine = new RazorLightEngineBuilder()
-            .UseEmbeddedResourcesProject(embeddedResRootType)
-            .UseMemoryCachingProvider()
-            .Build();
     }
 
     public string Name { get; }
