@@ -110,7 +110,7 @@ public interface IEmailConfigurator
     /// this allows for email readers without html capability, and also helps avoid spam filters.
     /// </summary>
     /// <param name="body">The content of the body.</param>
-    IEmailConfigurator PlainTextAlternativeBody(string body);
+    IEmailConfigurator PlainTextAltBody(string body);
 
     /// <summary>
     /// Sets message priority.
@@ -139,7 +139,7 @@ public interface IEmailConfigurator
     /// <param name="filename"></param>
     /// <param name="attachmentName"></param>
     /// <returns></returns>
-    IEmailConfigurator AttachFromFilename(string filename, string attachmentName = "");
+    IEmailConfigurator AttachFromFile(string filename, string attachmentName = "");
 
     /// <summary>
     /// Adds tag to the Email.
@@ -188,15 +188,16 @@ public interface IEmailConfigurator
     /// <param name="template">The a template.</param>
     /// <param name="model">Model for the template.</param>
     /// <returns>Instance of the Email class.</returns>
-    IEmailConfigurator PlaintextAlternativeUsingTemplate<T>(string template, T model);
+    IEmailConfigurator UsingTemplatePlainTextAlt<T>(string template, T model);
 
     /// <summary>
     /// Adds the template file to the email.
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     /// <param name="filename">The path to the file to load.</param>
     /// <param name="model">Model for the template.</param>
     /// <returns>Instance of the E.</returns>
-    IEmailConfigurator PlainTextAlternativeUsingTemplateFromFile<T>(string filename, T model);
+    IEmailConfigurator UsingTemplateFromFilePlainTextAlt<T>(string filename, T model);
 
     /// <summary>
     /// Sends notifications async.

@@ -21,7 +21,7 @@ public class FileSystemEmailMessageHandler : IEmailMessageHandler
     public async Task<NotificationResult> SendAsync(EmailMessage email, CancellationToken? cancellation = null)
     {
         var random = new Random();
-        var filename = Path.Combine(_directory, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_{random.Next(1000)}");
+        var filename = Path.Combine(_directory, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_{random.Next(1000)}.eml");
 
         using (var sw = new StreamWriter(File.OpenWrite(filename)))
         {

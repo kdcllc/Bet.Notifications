@@ -18,7 +18,7 @@ public sealed class EmailMessage
 
     public string? Body { get; set; }
 
-    public string? PlainTextAlternativeBody { get; set; }
+    public string? PlainTextAltBody { get; set; }
 
     public Priority Priority { get; set; }
 

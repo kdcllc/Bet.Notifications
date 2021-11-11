@@ -99,9 +99,9 @@ public class SendGridApiEmailMessageHandler : IEmailMessageHandler
                 break;
         }
 
-        if (!string.IsNullOrEmpty(email.PlainTextAlternativeBody))
+        if (!string.IsNullOrEmpty(email.PlainTextAltBody))
         {
-            mailMessage.PlainTextContent = email.PlainTextAlternativeBody;
+            mailMessage.PlainTextContent = email.PlainTextAltBody;
         }
 
         if (email.Attachments.Any())

@@ -17,11 +17,11 @@ public static class RazorNotificationBuilderExtensions
     /// <returns></returns>
     public static INotificationBuilder AddRazorTemplateRenderer(
         this INotificationBuilder builder,
-        Action<RazorRendererOptions, IServiceProvider>? configure = null)
+        Action<RazorTemplateRendererOptions, IServiceProvider>? configure = null)
     {
         // regiter razor options.
-        builder.Services.AddChangeTokenOptions<RazorRendererOptions>(
-            nameof(RazorRendererOptions),
+        builder.Services.AddChangeTokenOptions<RazorTemplateRendererOptions>(
+            nameof(RazorTemplateRendererOptions),
             builder.Name,
             (o, c) =>
             {
@@ -35,7 +35,7 @@ public static class RazorNotificationBuilderExtensions
 
         builder.Services.AddSingleton<ITemplateRenderer, RazorTemplateRenderer>(sp =>
         {
-            var options = sp.GetRequiredService<IOptionsMonitor<RazorRendererOptions>>();
+            var options = sp.GetRequiredService<IOptionsMonitor<RazorTemplateRendererOptions>>();
             return new RazorTemplateRenderer(builder.Name, options);
         });
 

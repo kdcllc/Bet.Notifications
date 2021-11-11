@@ -46,11 +46,11 @@ public class Main : IMain
                         @{
 	                        Layout = ""./Views/Shared/_Layout.cshtml"";
                         }
-                        sup @Model.Name here is a list @foreach(var i in Model.Numbers) { @i }";
+                        Shalom @Model.Name here is a list @foreach(var i in Model.Numbers) { @i }";
 
         dynamic viewBag = new ExpandoObject();
         viewBag.Title = "Hello!";
-        var model = new ViewModelWithViewBag { Name = "LUKE", Numbers = new[] { "1", "2", "3" }, ViewBag = viewBag };
+        var model = new ViewModelWithViewBag { Name = "John the Immerser", Numbers = new[] { "1", "2", "3" }, ViewBag = viewBag };
 
         await razorDirectory
             .To("email@gmail.com")

@@ -14,11 +14,11 @@ public class RazorTemplateRenderer : ITemplateRenderer
 {
     private readonly RazorLightEngine _engine;
 
-    public RazorTemplateRenderer(IOptionsMonitor<RazorRendererOptions> optionsMonitor) : this(string.Empty, optionsMonitor)
+    public RazorTemplateRenderer(IOptionsMonitor<RazorTemplateRendererOptions> optionsMonitor) : this(string.Empty, optionsMonitor)
     {
     }
 
-    public RazorTemplateRenderer(string name, IOptionsMonitor<RazorRendererOptions> optionsMonitor)
+    public RazorTemplateRenderer(string name, IOptionsMonitor<RazorTemplateRendererOptions> optionsMonitor)
     {
         Name = name;
 

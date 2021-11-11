@@ -2,7 +2,7 @@
 
 namespace Bet.Notifications.Razor.Options;
 
-public class RazorRendererOptions
+public class RazorTemplateRendererOptions
 {
     /// <summary>
     /// The root directory to use for the layouts.

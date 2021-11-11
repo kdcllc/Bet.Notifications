@@ -171,9 +171,9 @@ public class EmailConfigurator : IEmailConfigurator
     }
 
     /// <inheritdoc/>
-    public IEmailConfigurator PlainTextAlternativeBody(string body)
+    public IEmailConfigurator PlainTextAltBody(string body)
     {
-        Message.PlainTextAlternativeBody = body;
+        Message.PlainTextAltBody = body;
         return this;
     }
 
@@ -200,7 +200,7 @@ public class EmailConfigurator : IEmailConfigurator
     }
 
     /// <inheritdoc/>
-    public IEmailConfigurator AttachFromFilename(string filename, string attachmentName = "")
+    public IEmailConfigurator AttachFromFile(string filename, string attachmentName = "")
     {
         var stream = File.OpenRead(filename);
         Attach(new Attachment
@@ -244,10 +244,10 @@ public class EmailConfigurator : IEmailConfigurator
     }
 
     /// <inheritdoc/>
-    public IEmailConfigurator PlaintextAlternativeUsingTemplate<T>(string template, T model)
+    public IEmailConfigurator UsingTemplatePlainTextAlt<T>(string template, T model)
     {
         var result = Renderer.ParseAsync(template, model, false).GetAwaiter().GetResult();
-        Message.PlainTextAlternativeBody = result;
+        Message.PlainTextAltBody = result;
 
         return this;
     }
@@ -255,13 +255,34 @@ public class EmailConfigurator : IEmailConfigurator
     /// <inheritdoc/>
     public IEmailConfigurator UsingTemplateFromFile<T>(string filename, T model, bool isHtml = true)
     {
-        throw new NotImplementedException();
+        var template = string.Empty;
+
+        using (var reader = new StreamReader(File.OpenRead(filename)))
+        {
+            template = reader.ReadToEnd();
+        }
+
+        var result = Renderer.ParseAsync(template, model, isHtml).GetAwaiter().GetResult();
+        Message.IsHtml = isHtml;
+        Message.Body = result;
+
+        return this;
     }
 
     /// <inheritdoc/>
-    public IEmailConfigurator PlainTextAlternativeUsingTemplateFromFile<T>(string filename, T model)
+    public IEmailConfigurator UsingTemplateFromFilePlainTextAlt<T>(string filename, T model)
     {
-        throw new NotImplementedException();
+        var template = string.Empty;
+
+        using (var reader = new StreamReader(File.OpenRead(filename)))
+        {
+            template = reader.ReadToEnd();
+        }
+
+        var result = Renderer.ParseAsync(template, model, false).GetAwaiter().GetResult();
+        Message.PlainTextAltBody = result;
+
+        return this;
     }
 
     /// <inheritdoc/>
