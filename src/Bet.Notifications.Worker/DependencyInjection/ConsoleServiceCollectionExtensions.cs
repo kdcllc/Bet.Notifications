@@ -16,6 +16,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddEmailConfigurator(Notifications.RazorDirectory)
                 .AddRazorTemplateRenderer()
                 .AddFileSystemEmailMessageHandler();
+
+            services.AddEmailConfigurator(Notifications.RazorInMemoryDb)
+                .AddInMemoryRazorTemplateRenderer()
+                .AddFileSystemEmailMessageHandler();
         }
     }
 }

@@ -4,5 +4,5 @@ namespace Bet.Notifications.Razor;
 
 public interface IViewBagModel
 {
-    ExpandoObject ViewBag { get; }
+    ExpandoObject? ViewBag { get; }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Dynamic;
 
 using Bet.Notifications.Abstractions.Smtp;
+using Bet.Notifications.Razor.Repository.EntityFrameworkCore;
 using Bet.Notifications.Worker.Models;
 
 namespace Bet.Notifications.Worker;
@@ -34,6 +35,17 @@ public class Main : IMain
 
         var cancellationToken = _applicationLifetime.ApplicationStopping;
 
+        var db = _emailConfigurators.First(x => x.Name == Notifications.RazorInMemoryDb);
+
+        dynamic viewBag = new ExpandoObject();
+        viewBag.Title = "Shalom!";
+
+        var testModel = new TestViewModel { Name = "Johny", Age = 33, ViewBag = viewBag };
+        await db.To("to@email.com")
+                          .Subject("This is test for razor db renderer")
+                          .UsingTemplate("testTemplate", testModel)
+                          .SendAsync(cancellationToken);
+
         var repl = _emailConfigurators.First(x => x.Name == Notifications.Replace);
 
         await repl.To("to@email.com")
@@ -48,8 +60,7 @@ public class Main : IMain
                         }
                         Shalom @Model.Name here is a list @foreach(var i in Model.Numbers) { @i }";
 
-        dynamic viewBag = new ExpandoObject();
-        viewBag.Title = "Hello!";
+
         var model = new ViewModelWithViewBag { Name = "John the Immerser", Numbers = new[] { "1", "2", "3" }, ViewBag = viewBag };
 
         await razorDirectory

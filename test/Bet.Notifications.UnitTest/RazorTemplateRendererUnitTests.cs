@@ -5,10 +5,6 @@ using Bet.Notifications.Razor;
 using Bet.Notifications.Razor.Options;
 using Bet.Notifications.UnitTest.Models;
 
-using Microsoft.Extensions.Options;
-
-using Moq;
-
 namespace Bet.Notifications.UnitTest;
 
 public class RazorTemplateRendererUnitTests
@@ -16,11 +12,8 @@ public class RazorTemplateRendererUnitTests
     [Fact]
     public void Create_Body_From_Inline_Template_With_A_Layout_Using_ViewBag()
     {
-        var optionsMonitor = Mock.Of<IOptionsMonitor<RazorTemplateRendererOptions>>(_ => _.Get(string.Empty)
-                                                                                         == new RazorTemplateRendererOptions { RootDirectory = Directory.GetCurrentDirectory() });
-
         var configurator = EmailConfigurator.From("test@email.com");
-        configurator.UsingTemplateEngine(new RazorTemplateRenderer(optionsMonitor));
+        configurator.UsingTemplateEngine(new RazorTemplateRenderer(new RazorTemplateRendererOptions { RootDirectory = Directory.GetCurrentDirectory() }));
 
         var template = @"
                         @{
