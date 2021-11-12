@@ -27,7 +27,15 @@
 		<PackageReference Update="Bet.BuildingBlocks.Domain.Abstractions" Version="1.0.4" />
 		<PackageReference Update="EasyKeys.Extensions" Version="1.1.7" />
 		<PackageReference Update="MailKit" Version="2.15.0" />
+		<PackageReference Update="RazorLight" Version="2.0.0-rc.3" />
+
+		<PackageReference Update="Microsoft.EntityFrameworkCore" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.EntityFrameworkCore.InMemory" Version="$(NetCoreVersion)" />
+
 	</ItemGroup>
+
 
 	<ItemGroup Label="Unit Tests">
 		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />

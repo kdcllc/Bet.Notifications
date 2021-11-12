@@ -9,9 +9,25 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IMain, Main>();
 
             // register notifications with defaults
-            services.AddEmailNotifications("replace")
-                .AddDefaultRenderer()
-                .AddDefaultSender();
+            services.AddEmailConfigurator(Notifications.Replace)
+                .AddReplaceTempleteRenderer()
+                .AddFileSystemEmailMessageHandler();
+
+            services.AddEmailConfigurator(Notifications.RazorDirectory)
+                .AddRazorTemplateRenderer()
+                .AddFileSystemEmailMessageHandler();
+
+            services.AddEmailConfigurator(Notifications.RazorInMemoryDb)
+                .AddInMemoryRazorTemplateRenderer()
+                .AddFileSystemEmailMessageHandler();
+
+            services.AddEmailConfigurator(Notifications.ReplaceSendGridApi)
+                .AddReplaceTempleteRenderer()
+                .AddSendGridApiEmailMessageHandler();
+
+            services.AddEmailConfigurator(Notifications.ReplaceSendGridSmtp)
+                .AddReplaceTempleteRenderer()
+                .AddSendGridSmtpEmailMessageHandler();
         }
     }
 }

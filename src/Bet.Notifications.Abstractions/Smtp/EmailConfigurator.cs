@@ -2,19 +2,19 @@
 
 namespace Bet.Notifications.Abstractions.Smtp;
 
-public class Email : IEmail
+public class EmailConfigurator : IEmailConfigurator
 {
     private static readonly char[] EmailsSeparator = new char[] { ',', ';' };
 
-    public Email(string name, Address from) : this(name, from, new ReplaceRenderer(string.Empty), new FileSystemSender("/"))
+    public EmailConfigurator(string name, Address from) : this(name, from, new ReplaceTempleteRenderer(string.Empty), new FileSystemEmailMessageHandler("/"))
     {
     }
 
-    public Email(
+    public EmailConfigurator(
         string name,
         Address from,
         ITemplateRenderer renderer,
-        ISender sender)
+        IEmailMessageHandler sender)
     {
         Message = new EmailMessage
         {
@@ -36,7 +36,7 @@ public class Email : IEmail
     public ITemplateRenderer Renderer { get; set; }
 
     /// <inheritdoc/>
-    public ISender Sender { get; }
+    public IEmailMessageHandler Sender { get; }
 
     /// <summary>
     /// Creates a new Email instance and sets the from property.
@@ -44,13 +44,13 @@ public class Email : IEmail
     /// <param name="email">Email address to send from.</param>
     /// <param name="fromName">Name to send from.</param>
     /// <returns>Instance of the Email class.</returns>
-    public static IEmail From(string email, string fromName = "")
+    public static IEmailConfigurator From(string email, string fromName = "")
     {
-        return new Email(string.Empty, new Address(email, fromName));
+        return new EmailConfigurator(string.Empty, new Address(email, fromName));
     }
 
     /// <inheritdoc/>
-    public IEmail To(string emails, string names = "")
+    public IEmailConfigurator To(string emails, string names = "")
     {
         var addresses = GetAddresses(emails, names);
 
@@ -63,7 +63,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail To(string emails)
+    public IEmailConfigurator To(string emails)
     {
         foreach (var email in emails.Split(EmailsSeparator, StringSplitOptions.RemoveEmptyEntries))
         {
@@ -74,7 +74,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail To(IEnumerable<Address> emails)
+    public IEmailConfigurator To(IEnumerable<Address> emails)
     {
         foreach (var email in emails)
         {
@@ -85,14 +85,14 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail SetPriority(Priority priority = Priority.Normal)
+    public IEmailConfigurator SetPriority(Priority priority = Priority.Normal)
     {
         Message.Priority = priority;
         return this;
     }
 
     /// <inheritdoc/>
-    public IEmail Cc(string emails, string names = "")
+    public IEmailConfigurator Cc(string emails, string names = "")
     {
         var addresses = GetAddresses(emails, names);
 
@@ -105,7 +105,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail Cc(IEnumerable<Address> emails)
+    public IEmailConfigurator Cc(IEnumerable<Address> emails)
     {
         foreach (var email in emails)
         {
@@ -116,7 +116,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail Bcc(string emails, string names = "")
+    public IEmailConfigurator Bcc(string emails, string names = "")
     {
         var addresses = GetAddresses(emails, names);
 
@@ -129,7 +129,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail Bcc(IEnumerable<Address> emails)
+    public IEmailConfigurator Bcc(IEnumerable<Address> emails)
     {
         foreach (var email in emails)
         {
@@ -140,21 +140,21 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail ReplyTo(string address)
+    public IEmailConfigurator ReplyTo(string address)
     {
         Message.ReplyTo.Add(new Address(address));
         return this;
     }
 
     /// <inheritdoc/>
-    public IEmail ReplyTo(string address, string name)
+    public IEmailConfigurator ReplyTo(string address, string name)
     {
         Message.ReplyTo.Add(new Address(address, name));
         return this;
     }
 
     /// <inheritdoc/>
-    public IEmail Subject(string subject)
+    public IEmailConfigurator Subject(string subject)
     {
         Message.Subject = subject;
 
@@ -162,7 +162,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail Body(string body, bool isHtml = false)
+    public IEmailConfigurator Body(string body, bool isHtml = false)
     {
         Message.Body = body;
         Message.IsHtml = isHtml;
@@ -171,14 +171,14 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail PlainTextAlternativeBody(string body)
+    public IEmailConfigurator PlainTextAltBody(string body)
     {
-        Message.PlainTextAlternativeBody = body;
+        Message.PlainTextAltBody = body;
         return this;
     }
 
     /// <inheritdoc/>
-    public IEmail Attach(Attachment attachment)
+    public IEmailConfigurator Attach(Attachment attachment)
     {
         if (!Message.Attachments.Contains(attachment))
         {
@@ -189,7 +189,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail Attach(IEnumerable<Attachment> attachments)
+    public IEmailConfigurator Attach(IEnumerable<Attachment> attachments)
     {
         foreach (var attachment in attachments.Where(attachment => !Message.Attachments.Contains(attachment)))
         {
@@ -200,7 +200,7 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail AttachFromFilename(string filename, string attachmentName = "")
+    public IEmailConfigurator AttachFromFile(string filename, string attachmentName = "")
     {
         var stream = File.OpenRead(filename);
         Attach(new Attachment
@@ -213,28 +213,28 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail Tag(string tag)
+    public IEmailConfigurator Tag(string tag)
     {
         Message.Tags.Add(tag);
         return this;
     }
 
     /// <inheritdoc/>
-    public IEmail Header(string header, string body)
+    public IEmailConfigurator Header(string header, string body)
     {
         Message.Headers.Add(header, body);
         return this;
     }
 
     /// <inheritdoc/>
-    public IEmail UsingTemplateEngine(ITemplateRenderer renderer)
+    public IEmailConfigurator UsingTemplateEngine(ITemplateRenderer renderer)
     {
         Renderer = renderer;
         return this;
     }
 
     /// <inheritdoc/>
-    public IEmail UsingTemplate<T>(string template, T model, bool isHtml = true)
+    public IEmailConfigurator UsingTemplate<T>(string template, T model, bool isHtml = true)
     {
         var result = Renderer.ParseAsync(template, model, isHtml).GetAwaiter().GetResult();
         Message.IsHtml = isHtml;
@@ -244,10 +244,43 @@ public class Email : IEmail
     }
 
     /// <inheritdoc/>
-    public IEmail PlaintextAlternativeUsingTemplate<T>(string template, T model)
+    public IEmailConfigurator UsingTemplatePlainTextAlt<T>(string template, T model)
     {
         var result = Renderer.ParseAsync(template, model, false).GetAwaiter().GetResult();
-        Message.PlainTextAlternativeBody = result;
+        Message.PlainTextAltBody = result;
+
+        return this;
+    }
+
+    /// <inheritdoc/>
+    public IEmailConfigurator UsingTemplateFromFile<T>(string filename, T model, bool isHtml = true)
+    {
+        var template = string.Empty;
+
+        using (var reader = new StreamReader(File.OpenRead(filename)))
+        {
+            template = reader.ReadToEnd();
+        }
+
+        var result = Renderer.ParseAsync(template, model, isHtml).GetAwaiter().GetResult();
+        Message.IsHtml = isHtml;
+        Message.Body = result;
+
+        return this;
+    }
+
+    /// <inheritdoc/>
+    public IEmailConfigurator UsingTemplateFromFilePlainTextAlt<T>(string filename, T model)
+    {
+        var template = string.Empty;
+
+        using (var reader = new StreamReader(File.OpenRead(filename)))
+        {
+            template = reader.ReadToEnd();
+        }
+
+        var result = Renderer.ParseAsync(template, model, false).GetAwaiter().GetResult();
+        Message.PlainTextAltBody = result;
 
         return this;
     }
@@ -255,7 +288,7 @@ public class Email : IEmail
     /// <inheritdoc/>
     public virtual Task<NotificationResult> SendAsync(CancellationToken cancellationToken = default)
     {
-        return Sender.SendAsync(this, cancellationToken);
+        return Sender.SendAsync(Message, cancellationToken);
     }
 
     private static IList<Address> GetAddresses(string emails, string names)

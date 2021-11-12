@@ -2,9 +2,9 @@
 
 namespace Bet.Notifications.Abstractions.TemplateRenderers;
 
-public class ReplaceRenderer : ITemplateRenderer
+public class ReplaceTempleteRenderer : ITemplateRenderer
 {
-    public ReplaceRenderer(string name)
+    public ReplaceTempleteRenderer(string name)
     {
         Name = name;
     }

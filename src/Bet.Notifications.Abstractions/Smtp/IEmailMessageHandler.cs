@@ -1,6 +1,6 @@
 ﻿namespace Bet.Notifications.Abstractions.Smtp;
 
-public interface ISender
+public interface IEmailMessageHandler
 {
     /// <summary>
     /// Name of the sender to be used.
@@ -13,5 +13,5 @@ public interface ISender
     /// <param name="email"></param>
     /// <param name="cancellation"></param>
     /// <returns></returns>
-    Task<NotificationResult> SendAsync(IEmail email, CancellationToken? cancellation = null);
+    Task<NotificationResult> SendAsync(EmailMessage email, CancellationToken? cancellation = null);
 }

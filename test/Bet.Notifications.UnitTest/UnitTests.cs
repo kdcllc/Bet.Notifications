@@ -25,7 +25,7 @@ public class UnitTests
     [Fact]
     public void Split_Address_Test()
     {
-        var email = Email
+        var email = EmailConfigurator
         .From("test@test.com")
         .To("james@test.com;john@test.com", "James 1;John 2");
 
@@ -41,12 +41,28 @@ public class UnitTests
     {
         var template = "Shalom ##Name##";
 
-        var email = Email
+        var email = EmailConfigurator
             .From("from@email.com")
             .To("to@email.com")
             .Subject("Test message")
             .UsingTemplate(template, new { Name = "John the Immerser" });
 
         Assert.Equal("Shalom John the Immerser", email.Message.Body);
+    }
+
+    [Fact]
+    public void Replace_Render_And_MimeMessage_Test()
+    {
+        var template = "Shalom ##Name##";
+
+        var email = EmailConfigurator
+            .From("from@email.com")
+            .To("to@email.com, sayhello@gmail.com", "info, say")
+            .ReplyTo("donotreply@email.com")
+            .Subject("Test message")
+            .Header("test", "value")
+            .UsingTemplate(template, new { Name = "John the Immerser" });
+
+        var mimeMessage = email.Message.ToString();
     }
 }
