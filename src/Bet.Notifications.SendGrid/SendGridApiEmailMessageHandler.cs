@@ -53,6 +53,21 @@ public class SendGridApiEmailMessageHandler : IEmailMessageHandler
             mailMessage.SetReplyTo(email.ReplyTo.Select(ConvertAddress).First());
         }
 
+        if (_options.UseOpenTracking)
+        {
+            mailMessage.SetOpenTracking(true);
+        }
+
+        if (_options.UseClickTracking)
+        {
+            mailMessage.SetClickTracking(true, true);
+        }
+
+        if (email.Tags.Any())
+        {
+            mailMessage.AddCategories(email.Tags.ToList());
+        }
+
         mailMessage.SetSubject(email.Subject);
 
         if (email.Headers.Any())

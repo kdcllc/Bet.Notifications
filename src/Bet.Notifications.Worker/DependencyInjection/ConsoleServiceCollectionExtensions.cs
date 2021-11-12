@@ -20,6 +20,14 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddEmailConfigurator(Notifications.RazorInMemoryDb)
                 .AddInMemoryRazorTemplateRenderer()
                 .AddFileSystemEmailMessageHandler();
+
+            services.AddEmailConfigurator(Notifications.ReplaceSendGridApi)
+                .AddReplaceTempleteRenderer()
+                .AddSendGridApiEmailMessageHandler();
+
+            services.AddEmailConfigurator(Notifications.ReplaceSendGridSmtp)
+                .AddReplaceTempleteRenderer()
+                .AddSendGridSmtpEmailMessageHandler();
         }
     }
 }

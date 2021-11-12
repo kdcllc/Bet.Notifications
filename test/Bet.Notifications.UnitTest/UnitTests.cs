@@ -49,4 +49,20 @@ public class UnitTests
 
         Assert.Equal("Shalom John the Immerser", email.Message.Body);
     }
+
+    [Fact]
+    public void Replace_Render_And_MimeMessage_Test()
+    {
+        var template = "Shalom ##Name##";
+
+        var email = EmailConfigurator
+            .From("from@email.com")
+            .To("to@email.com, sayhello@gmail.com", "info, say")
+            .ReplyTo("donotreply@email.com")
+            .Subject("Test message")
+            .Header("test", "value")
+            .UsingTemplate(template, new { Name = "John the Immerser" });
+
+        var mimeMessage = email.Message.ToString();
+    }
 }

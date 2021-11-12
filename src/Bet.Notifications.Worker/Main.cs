@@ -53,13 +53,26 @@ public class Main : IMain
                           .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" })
                           .SendAsync(cancellationToken);
 
+        var replSendApi = _emailConfigurators.First(x => x.Name == Notifications.ReplaceSendGridApi);
+
+        await replSendApi.To("kingdavidconsulting@gmail.com")
+                          .Subject("This is test for replace template renderer send via SendGrid Api")
+                          .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" })
+                          .SendAsync(cancellationToken);
+
+        var replSendSmtp = _emailConfigurators.First(x => x.Name == Notifications.ReplaceSendGridSmtp);
+
+        await replSendApi.To("kingdavidconsulting@gmail.com")
+                          .Subject("This is test for replace template renderer send via SendGrid Smtp")
+                          .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" })
+
+                          .SendAsync(cancellationToken);
         var razorDirectory = _emailConfigurators.First(x => x.Name == Notifications.RazorDirectory);
         var template = @"
                         @{
 	                        Layout = ""./Views/Shared/_Layout.cshtml"";
                         }
                         Shalom @Model.Name here is a list @foreach(var i in Model.Numbers) { @i }";
-
 
         var model = new ViewModelWithViewBag { Name = "John the Immerser", Numbers = new[] { "1", "2", "3" }, ViewBag = viewBag };
 

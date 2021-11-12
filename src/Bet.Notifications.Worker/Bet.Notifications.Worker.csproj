@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bet.Notifications.Razor\Bet.Notifications.Razor.csproj" />
+    <ProjectReference Include="..\Bet.Notifications.SendGrid\Bet.Notifications.SendGrid.csproj" />
     <ProjectReference Include="..\Bet.Notifications\Bet.Notifications.csproj" />
   </ItemGroup>
 

@@ -8,5 +8,5 @@ public class SendGridOptions
 
     public bool UseClickTracking { get; set; }
 
-    public bool TrackEmamlOpen { get; set; }
+    public bool UseOpenTracking { get; set; }
 }
