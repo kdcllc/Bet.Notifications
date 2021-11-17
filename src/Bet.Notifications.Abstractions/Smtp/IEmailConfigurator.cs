@@ -25,6 +25,14 @@ public interface IEmailConfigurator
     string Name { get; }
 
     /// <summary>
+    /// Overrides name from DI configuration.
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    IEmailConfigurator SetFrom(string email, string name = "");
+
+    /// <summary>
     /// Adds a recipient to the email, Splits name and address on ';' or ','.
     /// </summary>
     /// <param name="emails">Email address of the recipient.</param>

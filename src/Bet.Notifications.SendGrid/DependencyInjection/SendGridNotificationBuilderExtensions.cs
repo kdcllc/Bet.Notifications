@@ -9,6 +9,13 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class SendGridNotificationBuilderExtensions
 {
+    /// <summary>
+    /// Adds SendGrid Api Sender allows for tracking clicks and opens.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <param name="sectionName">The configuration section name for <see cref="SendGridOptions"/>.</param>
+    /// <param name="configure">The action to configure <see cref="SendGridOptions"/> with access to <see cref="IConfiguration"/>.</param>
+    /// <returns></returns>
     public static INotificationBuilder AddSendGridApiEmailMessageHandler(
         this INotificationBuilder builder,
         string sectionName = nameof(SendGridOptions),
@@ -26,6 +33,13 @@ public static class SendGridNotificationBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Adds SendGrid Smpt sender to send regular emails.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <param name="sectionName">The configuration section name for <see cref="SendGridOptions"/>.</param>
+    /// <param name="configure">The action to configure <see cref="SendGridOptions"/> with access to <see cref="IConfiguration"/>.</param>
+    /// <returns></returns>
     public static INotificationBuilder AddSendGridSmtpEmailMessageHandler(
         this INotificationBuilder builder,
         string sectionName = nameof(SendGridOptions),
