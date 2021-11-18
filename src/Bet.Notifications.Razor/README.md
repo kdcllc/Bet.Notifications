@@ -8,7 +8,7 @@
 
 > The second letter in the Hebrew alphabet is the ב bet/beit. Its meaning is "house". In the ancient pictographic Hebrew it was a symbol resembling a tent on a landscape.
 
-_Note: Pre-release packages are distributed via [feedz.io](https://f.feedz.io/kdcllc/bet-extensions/nuget/index.json)._
+_Note: Pre-release packages are distributed via [feedz.io](https://f.feedz.io/kdcllc/bet-notifications/nuget/index.json)._
 
 This goal of this repo is to provide with a reusable functionality for developing Microservices with Docker and Kubernetes.
 
@@ -30,6 +30,45 @@ This library supports Repository Razor For templates.
     services.AddEmailConfigurator()
         .AddInMemoryRazorTemplateRenderer()
         .AddFileSystemEmailMessageHandler();
+```
+
+## Implementing Custom Entity Framework Repository
+
+1. Add Repository Item to the `CustomDbContext`
+
+```csharp
+public class CustomDbContext : DbContext
+{
+    public CustomDbContext(DbContextOptions<CustomDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<TemplateItem> EmailTemplates { get; set; }
+}
+```
+
+2. Create Implementation of `ITemplateRepository`
+
+```csharp
+public class RazorTemplateRepository : ITemplateRepository
+{
+    private readonly MarketingContext _context;
+
+    public RazorTemplateRepository(MarketingContext context)
+    {
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+    }
+
+    public Task<TemplateItem> GetSingleAsync(string templateName, CancellationToken cancellation = default)
+    {
+        return _context.EmailTemplates.FirstOrDefaultAsync(x => x.Name == templateName, cancellation);
+    }
+
+    public async Task<IEnumerable<TemplateItem>> ListAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.EmailTemplates.ToListAsync(cancellationToken);
+    }
+}
 ```
 
 In order for the projects to use this library please add this to you project file:

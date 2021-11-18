@@ -53,21 +53,4 @@ public static class NotificationsServiceCollectionExtensions
 
         return builder;
     }
-
-    public static INotificationBuilder AddReplaceTempleteRenderer(this INotificationBuilder builder)
-    {
-        builder.Services.AddTransient<ITemplateRenderer, ReplaceTempleteRenderer>(sp => new ReplaceTempleteRenderer(builder.Name));
-
-        return builder;
-    }
-
-    public static INotificationBuilder AddFileSystemEmailMessageHandler(this INotificationBuilder builder, string path = "")
-    {
-        builder.Services.AddTransient<IEmailMessageHandler, FileSystemEmailMessageHandler>(sp =>
-        {
-            return new FileSystemEmailMessageHandler(builder.Name, string.IsNullOrEmpty(path) ? Directory.GetCurrentDirectory() : path);
-        });
-
-        return builder;
-    }
 }

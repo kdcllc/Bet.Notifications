@@ -49,6 +49,12 @@ public class EmailConfigurator : IEmailConfigurator
         return new EmailConfigurator(string.Empty, new Address(email, fromName));
     }
 
+    public IEmailConfigurator SetFrom(string email, string name = "")
+    {
+        Message.From = new Address(email, name);
+        return this;
+    }
+
     /// <inheritdoc/>
     public IEmailConfigurator To(string emails, string names = "")
     {
@@ -133,7 +139,7 @@ public class EmailConfigurator : IEmailConfigurator
     {
         foreach (var email in emails)
         {
-           Message.Bcc.Add(email);
+            Message.Bcc.Add(email);
         }
 
         return this;
