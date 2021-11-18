@@ -7,7 +7,7 @@ public interface IEmailConfigurator
     /// <summary>
     /// An Email Message that was build.
     /// </summary>
-    EmailMessage Message { get; }
+    EmailMessage Message { get; set; }
 
     /// <summary>
     /// A template renderer engine to be used for transformation.
