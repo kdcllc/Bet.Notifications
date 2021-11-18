@@ -27,7 +27,7 @@ public class EmailConfigurator : IEmailConfigurator
     }
 
     /// <inheritdoc/>
-    public EmailMessage Message { get; }
+    public EmailMessage Message { get; set; }
 
     /// <inheritdoc/>
     public string Name { get; }
