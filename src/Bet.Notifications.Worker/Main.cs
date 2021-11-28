@@ -35,53 +35,87 @@ public class Main : IMain
 
         var cancellationToken = _applicationLifetime.ApplicationStopping;
 
-        var db = _emailConfigurators.First(x => x.Name == Notifications.RazorInMemoryDb);
+        // 1. File System Sender with Razor Template InMemory Database
+        await FileSystemSenderRazorInMemoryDbTemplateAsync(cancellationToken);
+
+        // 2. File System Sender with Replace Template
+        await FileSystemSenderReplaceTemplateAsync(cancellationToken);
+
+        // 3. SendGrid Api Sender with Replace Template.
+        // allows for tracking, categories etc.
+        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
+
+        // 4. SendGrid Smtp Sender with Replace Template
+        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
+
+        // 5. File System Sender with
+        await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
+
+        return 0;
+    }
+
+    private async Task FileSystemSenderRazorTempleInDirectoryAsync(CancellationToken cancellationToken)
+    {
+        var configurator = _emailConfigurators.First(x => x.Name == Notifications.FileSystemRazorTemplateInDirectory);
 
         dynamic viewBag = new ExpandoObject();
         viewBag.Title = "Shalom!";
 
-        var testModel = new TestViewModel { Name = "Johny", Age = 33, ViewBag = viewBag };
-        await db.To("to@email.com")
-                          .Subject("This is test for razor db renderer")
-                          .UsingTemplate("testTemplate", testModel)
-                          .SendAsync(cancellationToken);
-
-        var repl = _emailConfigurators.First(x => x.Name == Notifications.Replace);
-
-        await repl.To("to@email.com")
-                          .Subject("This is test for replace template renderer")
-                          .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" })
-                          .SendAsync(cancellationToken);
-
-        var replSendApi = _emailConfigurators.First(x => x.Name == Notifications.ReplaceSendGridApi);
-
-        await replSendApi.To("kingdavidconsulting@gmail.com")
-                          .Subject("This is test for replace template renderer send via SendGrid Api")
-                          .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" })
-                          .SendAsync(cancellationToken);
-
-        var replSendSmtp = _emailConfigurators.First(x => x.Name == Notifications.ReplaceSendGridSmtp);
-
-        await replSendApi.To("kingdavidconsulting@gmail.com")
-                          .Subject("This is test for replace template renderer send via SendGrid Smtp")
-                          .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" })
-
-                          .SendAsync(cancellationToken);
-        var razorDirectory = _emailConfigurators.First(x => x.Name == Notifications.RazorDirectory);
         var template = @"
                         @{
-	                        Layout = ""./Views/Shared/_Layout.cshtml"";
+                         Layout = ""./Views/Shared/_Layout.cshtml"";
                         }
                         Shalom @Model.Name here is a list @foreach(var i in Model.Numbers) { @i }";
 
         var model = new ViewModelWithViewBag { Name = "John the Immerser", Numbers = new[] { "1", "2", "3" }, ViewBag = viewBag };
 
-        await razorDirectory
+        var message = configurator
             .To("email@gmail.com")
             .Subject("This is test for Razor Directory with Template")
-            .UsingTemplate(template, model)
-            .SendAsync(cancellationToken);
+            .UsingTemplate(template, model);
 
-        return 0;
+        var response = await message.SendAsync(cancellationToken);
+    }
+
+    private async Task SendGridSenderReplaceTemplateAsync(string name, CancellationToken cancellationToken)
+    {
+        var configurator = _emailConfigurators.First(x => x.Name == name);
+
+        var model = new { Name = "John the Immerser" };
+
+        var message = configurator.To("kingdavidconsulting@gmail.com")
+                          .Subject($"This is a test for replace template renderer send via {name}")
+                          .UsingTemplate("Shalom ##Name##", model);
+        var response = await message.SendAsync(cancellationToken);
+    }
+
+    private async Task FileSystemSenderReplaceTemplateAsync(CancellationToken cancellationToken)
+    {
+        var configurator = _emailConfigurators.First(x => x.Name == Notifications.FileSytemReplaceTemplate);
+
+        var message = configurator.To("to@email.com")
+                          .Subject("This is test for replace template renderer")
+                          .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" });
+        var response = await configurator.SendAsync(cancellationToken);
+    }
+
+    private async Task FileSystemSenderRazorInMemoryDbTemplateAsync(CancellationToken cancellationToken)
+    {
+        var configurator = _emailConfigurators.First(x => x.Name == Notifications.FileSystemRazorTemplateInMemoryDb);
+
+        dynamic viewBag = new ExpandoObject();
+        viewBag.Title = "Shalom!";
+
+        var model = new TestViewModel
+        {
+            Name = "Johny",
+            Age = 33,
+            ViewBag = viewBag
+        };
+        var message = configurator.To("to@email.com")
+                          .Subject("This is test for razor db renderer")
+                          .UsingTemplate("testTemplate", model);
+
+        var response = await message.SendAsync(cancellationToken);
     }
 }

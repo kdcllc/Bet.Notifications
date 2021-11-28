@@ -1,33 +1,32 @@
 ﻿using Bet.Notifications.Worker;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection;
+
+public static class ConsoleServiceCollectionExtensions
 {
-    public static class ConsoleServiceCollectionExtensions
+    public static void ConfigureServices(HostBuilderContext hostBuilder, IServiceCollection services)
     {
-        public static void ConfigureServices(HostBuilderContext hostBuilder, IServiceCollection services)
-        {
-            services.AddScoped<IMain, Main>();
+        services.AddScoped<IMain, Main>();
 
-            // register notifications with defaults
-            services.AddEmailConfigurator(Notifications.Replace)
-                .AddReplaceTempleteRenderer()
-                .AddFileSystemEmailMessageHandler();
+        // register notifications with defaults
+        services.AddEmailConfigurator(Notifications.FileSytemReplaceTemplate)
+            .AddReplaceTempleteRenderer()
+            .AddFileSystemEmailMessageHandler();
 
-            services.AddEmailConfigurator(Notifications.RazorDirectory)
-                .AddRazorTemplateRenderer()
-                .AddFileSystemEmailMessageHandler();
+        services.AddEmailConfigurator(Notifications.FileSystemRazorTemplateInDirectory)
+            .AddRazorTemplateRenderer()
+            .AddFileSystemEmailMessageHandler();
 
-            services.AddEmailConfigurator(Notifications.RazorInMemoryDb)
-                .AddInMemoryRazorTemplateRenderer()
-                .AddFileSystemEmailMessageHandler();
+        services.AddEmailConfigurator(Notifications.FileSystemRazorTemplateInMemoryDb)
+            .AddInMemoryRazorTemplateRenderer()
+            .AddFileSystemEmailMessageHandler();
 
-            services.AddEmailConfigurator(Notifications.ReplaceSendGridApi)
-                .AddReplaceTempleteRenderer()
-                .AddSendGridApiEmailMessageHandler();
+        services.AddEmailConfigurator(Notifications.SendGridApiReplaceTemplate)
+            .AddReplaceTempleteRenderer()
+            .AddSendGridApiEmailMessageHandler();
 
-            services.AddEmailConfigurator(Notifications.ReplaceSendGridSmtp)
-                .AddReplaceTempleteRenderer()
-                .AddSendGridSmtpEmailMessageHandler();
-        }
+        services.AddEmailConfigurator(Notifications.SendGridSmtpReplaceTemplate)
+            .AddReplaceTempleteRenderer()
+            .AddSendGridSmtpEmailMessageHandler();
     }
 }
