@@ -11,6 +11,7 @@
 _Note: Pre-release packages are distributed via [feedz.io](https://f.feedz.io/kdcllc/bet-notifications/nuget/index.json)._
 
 This goal of this repo is to provide with a reusable functionality for developing Microservices with Docker and Kubernetes.
+The core functionality that is provided is the ability to generate notifications `emails` or `sms` messages.
 
 ## Hire me
 
@@ -22,9 +23,13 @@ Please send [email](mailto:kingdavidconsulting@gmail.com) if you consider to **h
 
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
+## Projects
 
-## Usage
-
+- [`Bet.Notifications`](./src/Bet.Notifications) - Generic host specific DI registrations.
+- [`Bet.Notifications.Abstractions`](./src/Bet.Notifications.Abstractions) - The basic notification package.
+- [`Bet.Notifications.Razor`](./src/Bet.Notifications.Razor) - The Razor Templating engine.
+- [`Bet.Notifications.SendGrid`](./src/Bet.Notifications.SendGrid) - The Sender based on SendGrid.
+- [`Bet.Notifications.Worker`](./src/Bet.Notifications.Worker) - The sample project demostrating the nuget packages.
 
 ## Resources
 

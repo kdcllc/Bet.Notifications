@@ -1,14 +1,19 @@
-﻿namespace Bet.Notifications.Worker;
+﻿using Bet.Notifications.Abstractions.Smtp;
 
+namespace Bet.Notifications.Worker;
+
+/// <summary>
+/// Registration for the <see cref="IEmailConfigurator"/>.
+/// </summary>
 public static class Notifications
 {
-    public static string Replace => nameof(Replace);
+    public static string FileSytemReplaceTemplate => nameof(FileSytemReplaceTemplate);
 
-    public static string RazorDirectory => nameof(RazorDirectory);
+    public static string FileSystemRazorTemplateInDirectory => nameof(FileSystemRazorTemplateInDirectory);
 
-    public static string RazorInMemoryDb => nameof(RazorInMemoryDb);
+    public static string FileSystemRazorTemplateInMemoryDb => nameof(FileSystemRazorTemplateInMemoryDb);
 
-    public static string ReplaceSendGridApi => nameof(ReplaceSendGridApi);
+    public static string SendGridApiReplaceTemplate => nameof(SendGridApiReplaceTemplate);
 
-    public static string ReplaceSendGridSmtp => nameof(ReplaceSendGridSmtp);
+    public static string SendGridSmtpReplaceTemplate => nameof(SendGridSmtpReplaceTemplate);
 }
