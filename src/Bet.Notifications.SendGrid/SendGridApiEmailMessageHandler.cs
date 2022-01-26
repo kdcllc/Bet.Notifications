@@ -14,10 +14,16 @@ namespace Bet.Notifications.SendGrid;
 public class SendGridApiEmailMessageHandler : IEmailMessageHandler
 {
     private readonly SendGridOptions _options;
+    private readonly ISendGridClient _client;
 
-    public SendGridApiEmailMessageHandler(string name, IOptionsMonitor<SendGridOptions> optionsMonitor)
+    // ISendGridClient
+    public SendGridApiEmailMessageHandler(
+        string name,
+        ISendGridClient client,
+        IOptionsMonitor<SendGridOptions> optionsMonitor)
     {
         Name = name;
+        _client = client ?? throw new ArgumentNullException(nameof(client));
         _options = optionsMonitor.Get(name);
     }
 
@@ -25,8 +31,6 @@ public class SendGridApiEmailMessageHandler : IEmailMessageHandler
 
     public async Task<NotificationResult> SendAsync(EmailMessage email, CancellationToken? cancellation = null)
     {
-        var sendGridClient = new SendGridClient(_options.ApiKey);
-
         var mailMessage = new SendGridMessage();
         mailMessage.SetSandBoxMode(_options.IsSandBoxMode);
 
@@ -133,38 +137,46 @@ public class SendGridApiEmailMessageHandler : IEmailMessageHandler
             }
         }
 
-        var sendGridResponse = await sendGridClient.SendEmailAsync(mailMessage, cancellation.GetValueOrDefault());
-
-        var sendResponse = new NotificationResult();
-
-        if (sendGridResponse.Headers.TryGetValues(
-            "X-Message-ID",
-            out var messageIds))
+        try
         {
-            sendResponse.MessageId = messageIds.FirstOrDefault();
-        }
+            var sendGridResponse = await _client.SendEmailAsync(mailMessage, cancellation.GetValueOrDefault()).ConfigureAwait(false); ;
 
-        if (IsHttpSuccess((int)sendGridResponse.StatusCode))
-        {
-            return sendResponse;
-        }
+            var sendResponse = new NotificationResult();
 
-        var errorsList = new List<string>();
-
-        errorsList.Add($"{sendGridResponse.StatusCode}");
-        var messageBodyDictionary = await sendGridResponse.DeserializeResponseBodyAsync(sendGridResponse.Body);
-
-        if (messageBodyDictionary.ContainsKey("errors"))
-        {
-            var errors = messageBodyDictionary["errors"];
-
-            foreach (var error in errors)
+            if (sendGridResponse.Headers.TryGetValues(
+                "X-Message-ID",
+                out var messageIds))
             {
-                errorsList.Add($"{error}");
+                sendResponse.MessageId = messageIds.FirstOrDefault();
             }
-        }
 
-        return NotificationResult.Failed(errorsList.ToArray());
+            if (IsHttpSuccess((int)sendGridResponse.StatusCode))
+            {
+                return sendResponse;
+            }
+
+            var errorsList = new List<string>
+            {
+                $"{sendGridResponse.StatusCode}"
+            };
+            var messageBodyDictionary = await sendGridResponse.DeserializeResponseBodyAsync(sendGridResponse.Body);
+
+            if (messageBodyDictionary.ContainsKey("errors"))
+            {
+                var errors = messageBodyDictionary["errors"];
+
+                foreach (var error in errors)
+                {
+                    errorsList.Add($"{error}");
+                }
+            }
+
+            return NotificationResult.Failed(errorsList.ToArray());
+        }
+        catch (Exception ex)
+        {
+            return NotificationResult.Failed(ex?.Message);
+        }
     }
 
     private EmailAddress ConvertAddress(Address address)
