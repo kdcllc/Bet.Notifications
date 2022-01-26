@@ -1,4 +1,6 @@
-﻿using Bet.Notifications.Abstractions;
+﻿using System.Diagnostics;
+
+using Bet.Notifications.Abstractions;
 using Bet.Notifications.Abstractions.Smtp;
 using Bet.Notifications.SendGrid.Options;
 
@@ -25,24 +27,36 @@ public class SendGridSmtpEmailMessageHandler : IEmailMessageHandler
 
     public async Task<NotificationResult> SendAsync(EmailMessage email, CancellationToken? cancellation = null)
     {
+        using var smtp = new SmtpClient();
+
         try
         {
-            using var smtp = new SmtpClient();
+            smtp.MessageSent += (sender, args) => Debug.WriteLine(args.Response);
+
+            // custom timeout for large files
+            smtp.Timeout = (int)_options.Timeout.TotalSeconds;
+
             smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-            await smtp.ConnectAsync("smtp.sendgrid.net", 465, SecureSocketOptions.Auto);
+            // 587
+            // 465
+            await smtp.ConnectAsync("smtp.sendgrid.net", _options.Port, SecureSocketOptions.Auto);
             smtp.AuthenticationMechanisms.Remove("XOAUTH");
             await smtp.AuthenticateAsync("apikey", _options.ApiKey);
 
-            await smtp.SendAsync(email.MimeMessage).ConfigureAwait(false);
+            await Task.Delay(300);
 
-            await smtp.DisconnectAsync(true);
+            await smtp.SendAsync(email.MimeMessage);
 
             return NotificationResult.Success;
         }
         catch (Exception ex)
         {
             return NotificationResult.Failed(ex.Message);
+        }
+        finally
+        {
+            await smtp.DisconnectAsync(true, cancellation.GetValueOrDefault());
         }
     }
 }

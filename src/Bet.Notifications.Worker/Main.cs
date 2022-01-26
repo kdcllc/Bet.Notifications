@@ -36,20 +36,20 @@ public class Main : IMain
         var cancellationToken = _applicationLifetime.ApplicationStopping;
 
         // 1. File System Sender with Razor Template InMemory Database
-        await FileSystemSenderRazorInMemoryDbTemplateAsync(cancellationToken);
+        //await FileSystemSenderRazorInMemoryDbTemplateAsync(cancellationToken);
 
         // 2. File System Sender with Replace Template
-        await FileSystemSenderReplaceTemplateAsync(cancellationToken);
+        //await FileSystemSenderReplaceTemplateAsync(cancellationToken);
 
         // 3. SendGrid Api Sender with Replace Template.
         // allows for tracking, categories etc.
-        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
+        //await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
 
         // 4. SendGrid Smtp Sender with Replace Template
         await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
 
         // 5. File System Sender with
-        await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
+        //await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
 
         return 0;
     }
@@ -75,6 +75,7 @@ public class Main : IMain
             .UsingTemplate(template, model);
 
         var response = await message.SendAsync(cancellationToken);
+        _logger.LogInformation("{methodName}-{result}", nameof(FileSystemSenderRazorTempleInDirectoryAsync), response.Errors.FirstOrDefault());
     }
 
     private async Task SendGridSenderReplaceTemplateAsync(string name, CancellationToken cancellationToken)
@@ -85,8 +86,12 @@ public class Main : IMain
 
         var message = configurator.To("kingdavidconsulting@gmail.com")
                           .Subject($"This is a test for replace template renderer send via {name}")
-                          .UsingTemplate("Shalom ##Name##", model);
+                          .AttachFromFile(@"C:\Users\Root\Downloads\FedEx_WebServices_DevelopersGuide_v2019.pdf", "FedEx_WebServices_DevelopersGuide_v2019.pdf")
+                          //.AttachFromFile(@"C:\Users\Root\Downloads\Blazor-for-ASP-NET-Web-Forms-Developers.pdf", "Blazor-for-ASP-NET-Web-Forms-Developers.pdf")
+                          .UsingTemplate($"Shalom ##Name## {GetHtml()}", model);
         var response = await message.SendAsync(cancellationToken);
+
+        _logger.LogInformation("{methodName}-{result}", nameof(SendGridSenderReplaceTemplateAsync), response.Errors.FirstOrDefault());
     }
 
     private async Task FileSystemSenderReplaceTemplateAsync(CancellationToken cancellationToken)
@@ -97,6 +102,8 @@ public class Main : IMain
                           .Subject("This is test for replace template renderer")
                           .UsingTemplate("Shalom ##Name##", new { Name = "John the Immerser" });
         var response = await configurator.SendAsync(cancellationToken);
+
+        _logger.LogInformation("{methodName}-{result}", nameof(FileSystemSenderReplaceTemplateAsync), response.Errors.FirstOrDefault());
     }
 
     private async Task FileSystemSenderRazorInMemoryDbTemplateAsync(CancellationToken cancellationToken)
@@ -117,5 +124,12 @@ public class Main : IMain
                           .UsingTemplate("testTemplate", model);
 
         var response = await message.SendAsync(cancellationToken);
+
+        _logger.LogInformation("{methodName}-{result}", nameof(FileSystemSenderRazorInMemoryDbTemplateAsync), response.Errors.FirstOrDefault());
+    }
+
+    private string GetHtml()
+    {
+        return File.ReadAllText("email.html");
     }
 }
