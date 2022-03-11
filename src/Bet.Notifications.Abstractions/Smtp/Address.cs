@@ -1,6 +1,4 @@
-﻿using Bet.BuildingBlocks.Domain.Abstractions;
-
-namespace Bet.Notifications.Abstractions.Smtp;
+﻿namespace Bet.Notifications.Abstractions.Smtp;
 
 /// <summary>
 /// Address for specific Email and Name.

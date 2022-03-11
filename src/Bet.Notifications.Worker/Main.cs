@@ -86,7 +86,7 @@ public class Main : IMain
 
         var message = configurator.To("kingdavidconsulting@gmail.com")
                           .Subject($"This is a test for replace template renderer send via {name}")
-                          .AttachFromFile(@"C:\Users\Root\Downloads\FedEx_WebServices_DevelopersGuide_v2019.pdf", "FedEx_WebServices_DevelopersGuide_v2019.pdf")
+                          //.AttachFromFile(@"C:\Users\Root\Downloads\FedEx_WebServices_DevelopersGuide_v2019.pdf", "FedEx_WebServices_DevelopersGuide_v2019.pdf")
                           //.AttachFromFile(@"C:\Users\Root\Downloads\Blazor-for-ASP-NET-Web-Forms-Developers.pdf", "Blazor-for-ASP-NET-Web-Forms-Developers.pdf")
                           .UsingTemplate($"Shalom ##Name## {GetHtml()}", model);
         var response = await message.SendAsync(cancellationToken);

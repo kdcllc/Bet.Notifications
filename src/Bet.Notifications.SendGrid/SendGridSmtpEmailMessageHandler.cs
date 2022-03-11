@@ -31,7 +31,9 @@ public class SendGridSmtpEmailMessageHandler : IEmailMessageHandler
 
         try
         {
-            smtp.MessageSent += (sender, args) => Debug.WriteLine(args.Response);
+            var response = string.Empty;
+
+            smtp.MessageSent += (sender, args) => response = args.Response;
 
             // custom timeout for large files
             smtp.Timeout = (int)_options.Timeout.TotalSeconds;
@@ -48,11 +50,16 @@ public class SendGridSmtpEmailMessageHandler : IEmailMessageHandler
 
             await smtp.SendAsync(email.MimeMessage);
 
-            return NotificationResult.Success;
+            return NotificationResult.Success(response);
         }
         catch (Exception ex)
         {
-            return NotificationResult.Failed(ex.Message);
+            if (_options.ThrowException)
+            {
+                throw;
+            }
+
+            return NotificationResult.Failed(ex?.Message ?? string.Empty, ex?.InnerException?.Message ?? string.Empty);
         }
         finally
         {

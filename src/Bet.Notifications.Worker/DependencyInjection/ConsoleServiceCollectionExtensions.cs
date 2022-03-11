@@ -26,7 +26,7 @@ public static class ConsoleServiceCollectionExtensions
             .AddSendGridApiEmailMessageHandler(
             configure: (options, config) =>
             {
-                options.Timeout = TimeSpan.FromSeconds(5);
+                options.Timeout = TimeSpan.FromSeconds(200);
             });
 
         services.AddEmailConfigurator(Notifications.SendGridSmtpReplaceTemplate)
