@@ -173,9 +173,13 @@ public class SendGridApiEmailMessageHandler : IEmailMessageHandler
 
             return NotificationResult.Failed(errorsList.ToArray());
         }
-        catch (Exception ex)
+        catch (Exception ex) when (!_options.ThrowException)
         {
-            return NotificationResult.Failed(ex?.Message);
+            return NotificationResult.Failed(ex?.Message ?? string.Empty, ex?.InnerException?.Message ?? string.Empty);
+        }
+        catch (Exception) when (_options.ThrowException)
+        {
+            throw;
         }
     }
 

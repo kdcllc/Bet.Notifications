@@ -43,10 +43,10 @@ public class Main : IMain
 
         // 3. SendGrid Api Sender with Replace Template.
         // allows for tracking, categories etc.
-        //await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
+        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
 
         // 4. SendGrid Smtp Sender with Replace Template
-        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
+        // await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
 
         // 5. File System Sender with
         //await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
@@ -86,7 +86,7 @@ public class Main : IMain
 
         var message = configurator.To("kingdavidconsulting@gmail.com")
                           .Subject($"This is a test for replace template renderer send via {name}")
-                          .AttachFromFile(@"C:\Users\Root\Downloads\FedEx_WebServices_DevelopersGuide_v2019.pdf", "FedEx_WebServices_DevelopersGuide_v2019.pdf")
+                          //.AttachFromFile(@"C:\Users\Root\Downloads\FedEx_WebServices_DevelopersGuide_v2019.pdf", "FedEx_WebServices_DevelopersGuide_v2019.pdf")
                           //.AttachFromFile(@"C:\Users\Root\Downloads\Blazor-for-ASP-NET-Web-Forms-Developers.pdf", "Blazor-for-ASP-NET-Web-Forms-Developers.pdf")
                           .UsingTemplate($"Shalom ##Name## {GetHtml()}", model);
         var response = await message.SendAsync(cancellationToken);
