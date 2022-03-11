@@ -40,6 +40,6 @@ public class FileSystemEmailMessageHandler : IEmailMessageHandler
             await sw.WriteAsync(email.Body);
         }
 
-        return NotificationResult.Success;
+        return NotificationResult.Success();
     }
 }

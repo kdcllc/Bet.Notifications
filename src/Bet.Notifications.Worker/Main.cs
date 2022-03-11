@@ -43,10 +43,10 @@ public class Main : IMain
 
         // 3. SendGrid Api Sender with Replace Template.
         // allows for tracking, categories etc.
-        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
+        //await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
 
         // 4. SendGrid Smtp Sender with Replace Template
-        // await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
+        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
 
         // 5. File System Sender with
         //await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);

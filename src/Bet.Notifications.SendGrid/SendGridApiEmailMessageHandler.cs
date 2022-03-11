@@ -159,7 +159,7 @@ public class SendGridApiEmailMessageHandler : IEmailMessageHandler
             {
                 $"{sendGridResponse.StatusCode}"
             };
-            var messageBodyDictionary = await sendGridResponse.DeserializeResponseBodyAsync(sendGridResponse.Body);
+            var messageBodyDictionary = await sendGridResponse.DeserializeResponseBodyAsync();
 
             if (messageBodyDictionary.ContainsKey("errors"))
             {
@@ -173,13 +173,14 @@ public class SendGridApiEmailMessageHandler : IEmailMessageHandler
 
             return NotificationResult.Failed(errorsList.ToArray());
         }
-        catch (Exception ex) when (!_options.ThrowException)
+        catch (Exception ex)
         {
+            if (_options.ThrowException)
+            {
+                throw;
+            }
+
             return NotificationResult.Failed(ex?.Message ?? string.Empty, ex?.InnerException?.Message ?? string.Empty);
-        }
-        catch (Exception) when (_options.ThrowException)
-        {
-            throw;
         }
     }
 
