@@ -36,21 +36,20 @@ public class Main : IMain
         var cancellationToken = _applicationLifetime.ApplicationStopping;
 
         // 1. File System Sender with Razor Template InMemory Database
-        //await FileSystemSenderRazorInMemoryDbTemplateAsync(cancellationToken);
+        await FileSystemSenderRazorInMemoryDbTemplateAsync(cancellationToken);
 
         // 2. File System Sender with Replace Template
-        //await FileSystemSenderReplaceTemplateAsync(cancellationToken);
+        // await FileSystemSenderReplaceTemplateAsync(cancellationToken);
 
         // 3. SendGrid Api Sender with Replace Template.
         // allows for tracking, categories etc.
-        //await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
+        // await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
 
         // 4. SendGrid Smtp Sender with Replace Template
-        await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
+        //await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
 
         // 5. File System Sender with
-        //await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
-
+        // await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
         return 0;
     }
 
