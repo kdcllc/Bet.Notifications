@@ -19,27 +19,36 @@
 	</PropertyGroup>
 
 	<ItemGroup Label="Libraries">
-		<PackageReference Update="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.*" />
+		<PackageReference Update="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.*" />
 		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(NetCoreVersion)" />
 		<PackageReference Update="Microsoft.Extensions.Hosting" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.Extensions.Http" Version="$(NetCoreVersion)" />
+		<PackageReference Update="SendGrid" Version="9.28.0" />
+
 		<PackageReference Update="Bet.Extensions.Options" Version="$(BetCommonVersion)" />
 		<PackageReference Update="Microsoft.Extensions.Logging" Version="$(NetCoreVersion)" />
-		<PackageReference Update="Bet.BuildingBlocks.Domain.Abstractions" Version="1.0.4" />
-		<PackageReference Update="EasyKeys.Extensions" Version="1.1.7" />
-		<PackageReference Update="MailKit" Version="2.15.0" />
+		<PackageReference Update="MailKit" Version="3.2.0" />
+		<PackageReference Update="RazorLight" Version="2.0.0" />
+
+		<PackageReference Update="Microsoft.EntityFrameworkCore" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(NetCoreVersion)" />
+		<PackageReference Update="Microsoft.EntityFrameworkCore.InMemory" Version="$(NetCoreVersion)" />
+
 	</ItemGroup>
 
+
 	<ItemGroup Label="Unit Tests">
-		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.2.0" />
 		<PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(NetCoreVersion)" />
-		<PackageReference Update="Moq" Version="4.16.1" />
+		<PackageReference Update="Moq" Version="4.18.1" />
 		<PackageReference Update="xunit" Version="2.4.1" />
-		<PackageReference Update="xunit.runner.visualstudio" Version="2.4.3" PrivateAssets="All" />
-		<PackageReference Update="coverlet.collector" Version="3.1.0" PrivateAssets="All" />
+		<PackageReference Update="xunit.runner.visualstudio" Version="2.4.5" PrivateAssets="All" />
+		<PackageReference Update="coverlet.collector" Version="3.1.2" PrivateAssets="All" />
 	</ItemGroup>
 
 	<ItemGroup Label="SourceLink">
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 	</ItemGroup>
 
 	<ItemGroup Label="Analyzers">
@@ -52,12 +61,12 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 
-		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64">
+		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.2.32">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 
-		<PackageReference Include="AsyncFixer" Version="1.5.1">
+		<PackageReference Include="AsyncFixer" Version="1.6.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>

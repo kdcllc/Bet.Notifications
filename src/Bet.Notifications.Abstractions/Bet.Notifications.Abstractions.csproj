@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bet.BuildingBlocks.Domain.Abstractions" />
-    <PackageReference Include="EasyKeys.Extensions" />
+    <PackageReference Include="MailKit" />
   </ItemGroup>
 
 </Project>

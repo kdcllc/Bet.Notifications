@@ -5,11 +5,6 @@
 /// </summary>
 public class NotificationResult
 {
-    /// <summary>
-    /// Returns an <see cref="NotificationResult"/>indicating a successful operation.
-    /// </summary>
-    public static NotificationResult Success { get; } = new NotificationResult { Succeeded = true };
-
     public string MessageId { get; set; } = string.Empty;
 
     /// <summary>
@@ -20,7 +15,7 @@ public class NotificationResult
     /// <summary>
     /// Whether if the operation succeeded or not.
     /// </summary>
-    public bool Succeeded { get; protected set; }
+    public bool Succeeded => !Errors.Any();
 
     /// <summary>
     /// Creates an <see cref="NotificationResult"/> indicating a failed Smtp operation, with a list of errors if applicable.
@@ -28,6 +23,19 @@ public class NotificationResult
     /// <param name="errors">An optional array of <see cref="string"/> which caused the operation to fail.</param>
     public static NotificationResult Failed(params string[] errors)
     {
-        return new NotificationResult { Succeeded = false, Errors = errors };
+        return new NotificationResult { Errors = errors };
+    }
+
+    /// <summary>
+    /// Returns an <see cref="NotificationResult"/>indicating a successful operation.
+    /// </summary>
+    public static NotificationResult Success(string messageId = "")
+    {
+        if (string.IsNullOrEmpty(messageId))
+        {
+            return new NotificationResult();
+        }
+
+        return new NotificationResult { MessageId = messageId };
     }
 }

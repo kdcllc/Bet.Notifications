@@ -4,15 +4,28 @@
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>dotnet-bet.notifications.worker-8633F654-B718-4963-8EAA-BEA90020FBCC</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bet.Extensions.Templating.Console" Version="1.0.*" />
+    <PackageReference Include="Bet.Extensions.Templating.Console" Version="2.0.*" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bet.Notifications.Razor\Bet.Notifications.Razor.csproj" />
+    <ProjectReference Include="..\Bet.Notifications.SendGrid\Bet.Notifications.SendGrid.csproj" />
     <ProjectReference Include="..\Bet.Notifications\Bet.Notifications.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="email.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
