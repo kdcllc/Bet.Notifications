@@ -46,7 +46,7 @@ public class Main : IMain
         // await SendGridSenderReplaceTemplateAsync(Notifications.SendGridApiReplaceTemplate, cancellationToken);
 
         // 4. SendGrid Smtp Sender with Replace Template
-        //await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
+        // await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
 
         // 5. File System Sender with
         // await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
@@ -85,8 +85,8 @@ public class Main : IMain
 
         var message = configurator.To("kingdavidconsulting@gmail.com")
                           .Subject($"This is a test for replace template renderer send via {name}")
-                          //.AttachFromFile(@"C:\Users\Root\Downloads\FedEx_WebServices_DevelopersGuide_v2019.pdf", "FedEx_WebServices_DevelopersGuide_v2019.pdf")
-                          //.AttachFromFile(@"C:\Users\Root\Downloads\Blazor-for-ASP-NET-Web-Forms-Developers.pdf", "Blazor-for-ASP-NET-Web-Forms-Developers.pdf")
+                          // .AttachFromFile(@"C:\Users\Root\Downloads\FedEx_WebServices_DevelopersGuide_v2019.pdf", "FedEx_WebServices_DevelopersGuide_v2019.pdf")
+                          // .AttachFromFile(@"C:\Users\Root\Downloads\Blazor-for-ASP-NET-Web-Forms-Developers.pdf", "Blazor-for-ASP-NET-Web-Forms-Developers.pdf")
                           .UsingTemplate($"Shalom ##Name## {GetHtml()}", model);
         var response = await message.SendAsync(cancellationToken);
 
@@ -95,7 +95,7 @@ public class Main : IMain
 
     private async Task FileSystemSenderReplaceTemplateAsync(CancellationToken cancellationToken)
     {
-        var configurator = _emailConfigurators.First(x => x.Name == Notifications.FileSytemReplaceTemplate);
+        var configurator = _emailConfigurators.First(x => x.Name == Notifications.FileSystemReplaceTemplate);
 
         var message = configurator.To("to@email.com")
                           .Subject("This is test for replace template renderer")

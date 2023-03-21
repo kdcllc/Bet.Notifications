@@ -165,7 +165,7 @@ public interface IEmailConfigurator
     IEmailConfigurator Header(string header, string body);
 
     /// <summary>
-    /// Set the template rendering engine to use, defaults to <see cref="ReplaceTempleteRenderer"/>.
+    /// Set the template rendering engine to use, defaults to <see cref="ReplaceTemplateRenderer"/>.
     /// </summary>
     IEmailConfigurator UsingTemplateEngine(ITemplateRenderer renderer);
 
@@ -190,7 +190,7 @@ public interface IEmailConfigurator
     IEmailConfigurator UsingTemplateFromFile<T>(string filename, T model, bool isHtml = true);
 
     /// <summary>
-    /// Adds atemplate to the email.
+    /// Adds a template to the email.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="template">The a template.</param>

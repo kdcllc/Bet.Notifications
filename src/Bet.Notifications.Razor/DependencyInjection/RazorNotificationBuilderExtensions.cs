@@ -49,12 +49,9 @@ public static class RazorNotificationBuilderExtensions
         this INotificationBuilder builder)
     {
         builder.Services.AddDbContext<TemplateDbContext>(
-        options =>
-        {
-            options.UseInMemoryDatabase("TemplateDb");
-        },
-        ServiceLifetime.Transient,
-        ServiceLifetime.Transient);
+                                    options => options.UseInMemoryDatabase("TemplateDb"),
+                                    ServiceLifetime.Transient,
+                                    ServiceLifetime.Transient);
 
         builder.Services.AddTransient<ITemplateRepository, TemplateRepository>();
 

@@ -7,7 +7,7 @@ namespace Bet.Notifications.Worker;
 /// </summary>
 public static class Notifications
 {
-    public static string FileSytemReplaceTemplate => nameof(FileSytemReplaceTemplate);
+    public static string FileSystemReplaceTemplate => nameof(FileSystemReplaceTemplate);
 
     public static string FileSystemRazorTemplateInDirectory => nameof(FileSystemRazorTemplateInDirectory);
 

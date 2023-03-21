@@ -7,11 +7,11 @@
         "*.tasks": "xml",
         "Dockerfile*": "dockerfile"
     },
-    "dotnet-test-explorer.enableTelemetry": false,
-    "dotnet-test-explorer.testProjectPath": "/test/**/*.csproj",
-    "dotnet-test-explorer.autoExpandTree": true,
-    "dotnet-test-explorer.pathForResultFile": "TestResults",
-    "dotnet-test-explorer.addProblems": true,
+    // "dotnet-test-explorer.enableTelemetry": false,
+    // "dotnet-test-explorer.testProjectPath": "/test/**/*.csproj",
+    // "dotnet-test-explorer.autoExpandTree": true,
+    // "dotnet-test-explorer.pathForResultFile": "TestResults",
+    // "dotnet-test-explorer.addProblems": true,
     "markdownlint.config": {
         "MD028": false,
         "MD025": {

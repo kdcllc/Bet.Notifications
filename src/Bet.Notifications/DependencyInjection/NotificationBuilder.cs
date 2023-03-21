@@ -1,5 +1,8 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// Default implementation of <see cref="INotificationBuilder"/>.
+/// </summary>
 public class NotificationBuilder : INotificationBuilder
 {
     public NotificationBuilder(IServiceCollection services, string name)

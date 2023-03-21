@@ -2,9 +2,9 @@
 
 namespace Bet.Notifications.Abstractions.TemplateRenderers;
 
-public class ReplaceTempleteRenderer : ITemplateRenderer
+public class ReplaceTemplateRenderer : ITemplateRenderer
 {
-    public ReplaceTempleteRenderer(string name)
+    public ReplaceTemplateRenderer(string name)
     {
         Name = name;
     }
@@ -20,7 +20,7 @@ public class ReplaceTempleteRenderer : ITemplateRenderer
     {
         if (model == null)
         {
-            throw new ArgumentNullException("model");
+            throw new ArgumentNullException(nameof(model));
         }
 
         foreach (var pi in model.GetType().GetRuntimeProperties())

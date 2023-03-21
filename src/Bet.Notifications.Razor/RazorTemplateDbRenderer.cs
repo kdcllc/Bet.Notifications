@@ -7,7 +7,7 @@ namespace Bet.Notifications.Razor;
 
 public class RazorTemplateDbRenderer : ITemplateRenderer
 {
-    private RazorLightEngine? _engine;
+    private readonly RazorLightEngine? _engine;
 
     public RazorTemplateDbRenderer(string name, RepositoryRazorLightProject project)
     {
