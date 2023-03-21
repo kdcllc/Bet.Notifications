@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-using Bet.Notifications.Abstractions;
+﻿using Bet.Notifications.Abstractions;
 using Bet.Notifications.Abstractions.Smtp;
 using Bet.Notifications.SendGrid.Options;
 
@@ -52,13 +50,8 @@ public class SendGridSmtpEmailMessageHandler : IEmailMessageHandler
 
             return NotificationResult.Success(response);
         }
-        catch (Exception ex)
+        catch (Exception ex) when (!_options.ThrowException)
         {
-            if (_options.ThrowException)
-            {
-                throw;
-            }
-
             return NotificationResult.Failed(ex?.Message ?? string.Empty, ex?.InnerException?.Message ?? string.Empty);
         }
         finally

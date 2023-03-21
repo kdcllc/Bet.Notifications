@@ -7,7 +7,7 @@
 public sealed class MimeTypeLookup
 {
     private static readonly Dictionary<string, string> _mappings =
-        new Dictionary<string, string>(2000, StringComparer.InvariantCultureIgnoreCase)
+        new(2000, StringComparer.InvariantCultureIgnoreCase)
     {
         { ".ez", "application/andrew-inset" },
         { ".aw", "application/applixware" },

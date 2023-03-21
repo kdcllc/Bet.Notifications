@@ -9,8 +9,8 @@ public static class ConsoleServiceCollectionExtensions
         services.AddScoped<IMain, Main>();
 
         // register notifications with defaults
-        services.AddEmailConfigurator(Notifications.FileSytemReplaceTemplate)
-            .AddReplaceTempleteRenderer()
+        services.AddEmailConfigurator(Notifications.FileSystemReplaceTemplate)
+            .AddReplaceTemplateRenderer()
             .AddFileSystemEmailMessageHandler();
 
         services.AddEmailConfigurator(Notifications.FileSystemRazorTemplateInDirectory)
@@ -22,7 +22,7 @@ public static class ConsoleServiceCollectionExtensions
             .AddFileSystemEmailMessageHandler();
 
         services.AddEmailConfigurator(Notifications.SendGridApiReplaceTemplate)
-            .AddReplaceTempleteRenderer()
+            .AddReplaceTemplateRenderer()
             .AddSendGridApiEmailMessageHandler(
             configure: (options, config) =>
             {
@@ -30,7 +30,7 @@ public static class ConsoleServiceCollectionExtensions
             });
 
         services.AddEmailConfigurator(Notifications.SendGridSmtpReplaceTemplate)
-            .AddReplaceTempleteRenderer()
+            .AddReplaceTemplateRenderer()
             .AddSendGridSmtpEmailMessageHandler();
     }
 }

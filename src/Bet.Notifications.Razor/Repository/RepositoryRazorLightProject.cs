@@ -23,7 +23,7 @@ public class RepositoryRazorLightProject : RazorLightProject
         return new RepositoryRazorProjectItem(template.Name, template.Content);
     }
 
-    public async Task<IEnumerable<string>> GetKnownKeysAsync()
+    public override async Task<IEnumerable<string>> GetKnownKeysAsync()
     {
         var ids = (await _repository.ListAsync()).Select(x => x.Name);
         return ids.Select(x => x);

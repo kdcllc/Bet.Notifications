@@ -1,22 +1,9 @@
 mode: Mainline
-next-version: 1.0
+next-version: 1.0.1
 branches:
-  master:
-    mode: ContinuousDeployment
-    tag: ''
-    increment: Patch
-    regex: ^master$|^main$
-    is-mainline: true
   feature:
-    mode: ContinuousDelivery
-    tag: useBranchName
-    increment: Inherit
-    regex: ^features?[/-]
-  develop:
-    mode: ContinuousDeployment
-    tag: preview
-    increment: Minor
-    regex: ^dev(elop)?(ment)?$
+    tag: alpha
+  master:
+    tag: ""
 ignore:
   sha: []
-merge-message-formats: {}

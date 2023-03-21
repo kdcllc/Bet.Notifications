@@ -23,34 +23,23 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+
+      # https://github.com/GitTools/actions
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.10.2
+        with:
+          versionSpec: "5.x"
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checks out repo
+      - name: Checkout repo
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # to fetch all history for all tags and branches
 
-        # https://github.com/actions/setup-dotnet
-      - name: Install DotNetCore 6.0 Preview
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.x"
-          include-prerelease: true
-
-        # https://github.com/GitTools/actions
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.9
-        with:
-          versionSpec: "5.x"
-
-      - name: Install DotNetCore 5.0 for GitVersion
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "5.0.x"
-
       # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitversion/execute/usage-examples.md
       - name: Use GitVersion
         id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.7
+        uses: gittools/actions/gitversion/execute@v0.10.2
         with:
           useConfigFile: true
           updateAssemblyInfo: false
@@ -67,6 +56,13 @@ jobs:
           echo "VersionSourceSha: ${{ steps.gitversion.outputs.versionSourceSha }}"
           echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.commitsSinceVersionSource }}"
           echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
+
+        # https://github.com/actions/setup-dotnet
+      - name: Install net7.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "7.0.x"
+          include-prerelease: true
 
       - name: Clear Nuget Feeds
         run: dotnet nuget locals --clear all

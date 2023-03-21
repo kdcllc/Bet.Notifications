@@ -6,7 +6,7 @@ namespace Bet.Notifications.Razor.Repository;
 
 public class RepositoryRazorProjectItem : RazorLightProjectItem
 {
-    private string _content;
+    private readonly string _content;
 
     public RepositoryRazorProjectItem(string key, string content)
     {

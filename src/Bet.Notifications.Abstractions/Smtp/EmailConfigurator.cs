@@ -6,7 +6,8 @@ public class EmailConfigurator : IEmailConfigurator
 {
     private static readonly char[] EmailsSeparator = new char[] { ',', ';' };
 
-    public EmailConfigurator(string name, Address from) : this(name, from, new ReplaceTempleteRenderer(string.Empty), new FileSystemEmailMessageHandler("/"))
+    public EmailConfigurator(string name, Address from)
+        : this(name, from, new ReplaceTemplateRenderer(string.Empty), new FileSystemEmailMessageHandler("/"))
     {
     }
 
@@ -49,6 +50,7 @@ public class EmailConfigurator : IEmailConfigurator
         return new EmailConfigurator(string.Empty, new Address(email, fromName));
     }
 
+    /// <inheritdoc/>
     public IEmailConfigurator SetFrom(string email, string name = "")
     {
         Message.From = new Address(email, name);

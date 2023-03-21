@@ -8,7 +8,7 @@ public class NotificationResult
     public string MessageId { get; set; } = string.Empty;
 
     /// <summary>
-    /// An <see cref="IEnumerable{string}"/> containing an errors that occurred during the operation.
+    /// An <see cref="IEnumerable{T}"/> containing an errors that occurred during the operation.
     /// </summary>
     public IEnumerable<string> Errors { get; protected set; } = new List<string>();
 

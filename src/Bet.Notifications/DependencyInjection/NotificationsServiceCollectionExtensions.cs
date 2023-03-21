@@ -38,12 +38,12 @@ public static class NotificationsServiceCollectionExtensions
 
                 if (render == null)
                 {
-                    throw new ArgumentNullException(nameof(render), "Add Template Rederer .AddReplaceTempleteRenderer()");
+                    throw new ArgumentNullException(nameof(render), "Add Template Renderer .AddReplaceTemplateRenderer()");
                 }
 
                 if (sender == null)
                 {
-                    throw new ArgumentNullException(nameof(sender), "Add IEmailMessageHandler .AddReplaceTempleteRenderer()");
+                    throw new ArgumentNullException(nameof(sender), "Add IEmailMessageHandler .AddReplaceTemplateRenderer()");
                 }
 
                 var fromAddress = new Address(options.From, options.FromName);
