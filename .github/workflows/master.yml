@@ -58,10 +58,10 @@ jobs:
           echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
 
         # https://github.com/actions/setup-dotnet
-      - name: Install net7.0
+      - name: Install net8.0
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "7.0.x"
+          dotnet-version: "8.0.x"
           include-prerelease: true
 
       - name: Clear Nuget Feeds
