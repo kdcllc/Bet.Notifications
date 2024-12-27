@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <UserSecretsId>dotnet-bet.notifications.worker-8633F654-B718-4963-8EAA-BEA90020FBCC</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <PreserveCompilationContext>true</PreserveCompilationContext>
@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bet.Notifications.AzureCommunication\Bet.Notifications.AzureCommunication.csproj" />
     <ProjectReference Include="..\Bet.Notifications.Razor\Bet.Notifications.Razor.csproj" />
     <ProjectReference Include="..\Bet.Notifications.SendGrid\Bet.Notifications.SendGrid.csproj" />
     <ProjectReference Include="..\Bet.Notifications\Bet.Notifications.csproj" />

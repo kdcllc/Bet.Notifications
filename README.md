@@ -6,6 +6,8 @@
 ![Nuget](https://img.shields.io/nuget/dt/Bet.Notifications.Abstractions)
 [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https://f.feedz.io/kdcllc/bet-notifications/shield/Bet.Notifications.Abstractions/latest)](https://f.feedz.io/kdcllc/bet-notifications/packages/Bet.Notifications.Abstractions/latest/download)
 
+![Stand With Israel](./img/IStandWithIsrael.png)
+
 > The second letter in the Hebrew alphabet is the ב bet/beit. Its meaning is "house". In the ancient pictographic Hebrew it was a symbol resembling a tent on a landscape.
 
 _Note: Pre-release packages are distributed via [feedz.io](https://f.feedz.io/kdcllc/bet-notifications/nuget/index.json)._
@@ -29,6 +31,7 @@ If you like or are using this project to learn or start your solution, please gi
 - [`Bet.Notifications.Abstractions`](./src/Bet.Notifications.Abstractions) - The basic notification package.
 - [`Bet.Notifications.Razor`](./src/Bet.Notifications.Razor) - The Razor Templating engine.
 - [`Bet.Notifications.SendGrid`](./src/Bet.Notifications.SendGrid) - The Sender based on SendGrid.
+- [`Bet.Notifications.AzureCommunication`](./src/Bet.Notifications.AzureCommunication) - The Sender based on Azure Communication Services - Email.
 - [`Bet.Notifications.Worker`](./src/Bet.Notifications.Worker) - The sample project demostrating the nuget packages.
 
 ## Resources

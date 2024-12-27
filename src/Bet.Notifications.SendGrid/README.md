@@ -6,6 +6,8 @@
 ![Nuget](https://img.shields.io/nuget/dt/Bet.Notifications.SendGrid)
 [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https://f.feedz.io/kdcllc/bet-notifications/shield/Bet.Notifications.SendGrid/latest)](https://f.feedz.io/kdcllc/bet-notifications/packages/Bet.Notifications.SendGrid/latest/download)
 
+![Stand With Israel](../../img/IStandWithIsrael.png)
+
 > The second letter in the Hebrew alphabet is the ב bet/beit. Its meaning is "house". In the ancient pictographic Hebrew it was a symbol resembling a tent on a landscape.
 
 _Note: Pre-release packages are distributed via [feedz.io](https://f.feedz.io/kdcllc/bet-notifications/nuget/index.json)._

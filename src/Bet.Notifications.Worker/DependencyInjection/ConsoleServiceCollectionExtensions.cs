@@ -24,13 +24,14 @@ public static class ConsoleServiceCollectionExtensions
         services.AddEmailConfigurator(Notifications.SendGridApiReplaceTemplate)
             .AddReplaceTemplateRenderer()
             .AddSendGridApiEmailMessageHandler(
-            configure: (options, config) =>
-            {
-                options.Timeout = TimeSpan.FromSeconds(200);
-            });
+            configure: (options, config) => options.Timeout = TimeSpan.FromSeconds(200));
 
         services.AddEmailConfigurator(Notifications.SendGridSmtpReplaceTemplate)
             .AddReplaceTemplateRenderer()
             .AddSendGridSmtpEmailMessageHandler();
+
+        services.AddEmailConfigurator(Notifications.AzureCommunicationTemplateInDirectory)
+            .AddRazorTemplateRenderer()
+            .AddAzureCommunicationEmailMessageHandler();
     }
 }

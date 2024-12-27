@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Communication.Email" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Options" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Bet.Notifications\Bet.Notifications.csproj" />
+	</ItemGroup>
+	
+</Project>
