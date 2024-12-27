@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{81BE58EA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bet.Notifications.Worker", "src\Bet.Notifications.Worker\Bet.Notifications.Worker.csproj", "{8DA2EB4F-B063-452B-8E26-88E229584D5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bet.Notifications.AzureCommunication", "src\Bet.Notifications.AzureCommunication\Bet.Notifications.AzureCommunication.csproj", "{6B45A575-D66E-408D-A139-3A27544934B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{8DA2EB4F-B063-452B-8E26-88E229584D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DA2EB4F-B063-452B-8E26-88E229584D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DA2EB4F-B063-452B-8E26-88E229584D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B45A575-D66E-408D-A139-3A27544934B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B45A575-D66E-408D-A139-3A27544934B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B45A575-D66E-408D-A139-3A27544934B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B45A575-D66E-408D-A139-3A27544934B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{6FE2098A-EA35-4B4D-8F7A-2B8E4181A78A} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
 		{EAA9D2B6-3CE9-4A4B-BA9F-37DD9A741E9B} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
 		{8DA2EB4F-B063-452B-8E26-88E229584D5D} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
+		{6B45A575-D66E-408D-A139-3A27544934B3} = {072166FA-5698-4EC3-9911-8F9CC8B36125}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {06EF2AE1-06B9-4D9B-AEA8-BE60D1DC63E3}
