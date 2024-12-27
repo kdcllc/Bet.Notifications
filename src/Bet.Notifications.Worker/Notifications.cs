@@ -15,5 +15,13 @@ public static class Notifications
 
     public static string SendGridApiReplaceTemplate => nameof(SendGridApiReplaceTemplate);
 
+    /// <summary>
+    /// SendGrid SMTP to send out an email that is generated from a template inline text.
+    /// </summary>
     public static string SendGridSmtpReplaceTemplate => nameof(SendGridSmtpReplaceTemplate);
+
+    /// <summary>
+    /// Azure Communication Services to send out an email that is generated from a template that is stored in Template in Directory.
+    /// </summary>
+    public static string AzureCommunicationTemplateInDirectory => nameof(AzureCommunicationTemplateInDirectory);
 }

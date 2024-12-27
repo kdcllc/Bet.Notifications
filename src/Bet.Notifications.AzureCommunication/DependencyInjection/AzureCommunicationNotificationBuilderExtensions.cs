@@ -3,7 +3,6 @@ using Bet.Notifications.AzureCommunication;
 using Bet.Notifications.AzureCommunication.Options;
 
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -34,16 +33,14 @@ public static class AzureCommunicationNotificationBuilderExtensions
 
         builder.Services.AddChangeTokenOptions<AzureCommunicatioOptions>(sectionName, builder.Name, (o, c) => configure?.Invoke(o, c));
 
-
         builder.Services.AddTransient<IEmailClientFactory, EmailClientFactory>();
-
 
         builder.Services.AddTransient<IEmailMessageHandler, AzureCommunicationEmailMessageHandler>(sp =>
         {
             var optionsMonitor = sp.GetRequiredService<IOptionsMonitor<AzureCommunicatioOptions>>();
             var factory = sp.GetRequiredService<IEmailClientFactory>();
 
-            return new AzureCommunicationEmailMessageHandler(builder.Name, client);
+            return new AzureCommunicationEmailMessageHandler(builder.Name, factory);
         });
         return builder;
     }
