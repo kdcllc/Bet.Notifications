@@ -1,6 +1,8 @@
 ﻿using System.Dynamic;
+using System.Threading;
 
 using Bet.Notifications.Abstractions.Smtp;
+using Bet.Notifications.Razor;
 using Bet.Notifications.Razor.Repository.EntityFrameworkCore;
 using Bet.Notifications.Worker.Models;
 
@@ -36,7 +38,7 @@ public class Main : IMain
         var cancellationToken = _applicationLifetime.ApplicationStopping;
 
         // 1. File System Sender with Razor Template InMemory Database
-        await FileSystemSenderRazorInMemoryDbTemplateAsync(cancellationToken);
+        // await FileSystemSenderRazorInMemoryDbTemplateAsync(cancellationToken);
 
         // 2. File System Sender with Replace Template
         // await FileSystemSenderReplaceTemplateAsync(cancellationToken);
@@ -48,8 +50,12 @@ public class Main : IMain
         // 4. SendGrid Smtp Sender with Replace Template
         // await SendGridSenderReplaceTemplateAsync(Notifications.SendGridSmtpReplaceTemplate, cancellationToken);
 
-        // 5. File System Sender with
+        // 5. File System Sender with Template In Directory
         // await FileSystemSenderRazorTempleInDirectoryAsync(cancellationToken);
+
+        // 6. Azure Communication Sender with Template In Directory
+        await AzureCommunicationSenderTempleInDirectoryAsync(cancellationToken);
+
         return 0;
     }
 
@@ -125,6 +131,32 @@ public class Main : IMain
         var response = await message.SendAsync(cancellationToken);
 
         _logger.LogInformation("{methodName}-{result}", nameof(FileSystemSenderRazorInMemoryDbTemplateAsync), response.Errors.FirstOrDefault());
+    }
+
+    private async Task AzureCommunicationSenderTempleInDirectoryAsync(CancellationToken cancellationToken)
+    {
+        var configurator = _emailConfigurators.First(x => x.Name == Notifications.AzureCommunicationTemplateInDirectory);
+
+        dynamic viewBag = new ExpandoObject();
+        viewBag.Title = "Shalom!";
+
+        var model = new ViewModelWithViewBag
+        {
+            ViewBag = viewBag,
+            Numbers = new[] { "1", "2", "3" },
+            Name = "Mr Smith"
+        };
+
+        var fileName = "./Views/EmailTemplate.cshtml";
+
+        var message = configurator
+            .To("email@domain.com")
+            .Subject("This is test for Razor Directory with Template")
+            .UsingTemplateFromFile(fileName, model);
+
+        var response = await message.SendAsync(cancellationToken);
+
+        _logger.LogInformation("{methodName}-{result}", nameof(AzureCommunicationSenderTempleInDirectoryAsync), response.Errors.FirstOrDefault());
     }
 
     private string GetHtml()

@@ -1,0 +1,12 @@
+@model Bet.Notifications.Worker.Models.ViewModelWithViewBag
+
+@{
+    Layout = "./Views/Shared/_Layout.cshtml";
+}
+
+Shalom @Model.Name here is a list
+
+@foreach (var i in Model.Numbers)
+{
+    <div>@i</div>
+}

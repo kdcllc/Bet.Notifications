@@ -22,34 +22,17 @@ public static class AzureCommunicationNotificationBuilderExtensions
         string sectionName = nameof(AzureCommunicationOptions),
         Action<AzureCommunicationOptions, IConfiguration>? configure = null)
     {
-        builder.Services
-                .AddOptions<AzureCommunicationOptions>(builder.Name)
-                .Configure<IOptionsMonitor<AzureCommunicationOptions>>(
-                (options, optionsMonitor) =>
-                {
-                    var o = optionsMonitor.Get(builder.Name);
-                    options.EmailConnectionString = o.EmailConnectionString;
-                })
-                .PostConfigure(options =>
-                {
-                    // validation
-                    if (string.IsNullOrWhiteSpace(options.EmailConnectionString))
-                    {
-                        throw new ArgumentNullException(nameof(options.EmailConnectionString));
-                    }
-                });
-
         builder.Services.AddChangeTokenOptions<AzureCommunicationOptions>(sectionName, builder.Name, (o, c) => configure?.Invoke(o, c));
 
         builder.Services.AddTransient<IEmailClientFactory, EmailClientFactory>();
 
         builder.Services.AddTransient<IEmailMessageHandler, AzureCommunicationEmailMessageHandler>(sp =>
         {
-            var optionsMonitor = sp.GetRequiredService<IOptionsMonitor<AzureCommunicationOptions>>();
             var factory = sp.GetRequiredService<IEmailClientFactory>();
 
             return new AzureCommunicationEmailMessageHandler(builder.Name, factory);
         });
+
         return builder;
     }
 }
