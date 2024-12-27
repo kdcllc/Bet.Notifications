@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Bet.Notifications.AzureCommunication;
 
-public class EmailClientFactory(IOptionsMonitor<AzureCommunicatioOptions> optionsMonitor) : IEmailClientFactory
+public class EmailClientFactory(IOptionsMonitor<AzureCommunicationOptions> optionsMonitor) : IEmailClientFactory
 {
     public EmailClient GetClient(string name)
     {

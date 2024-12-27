@@ -1,6 +1,6 @@
 ﻿namespace Bet.Notifications.AzureCommunication.Options;
 
-public class AzureCommunicatioOptions
+public class AzureCommunicationOptions
 {
     /// <summary>
     /// Azure Communication Connection String.

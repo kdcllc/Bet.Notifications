@@ -32,5 +32,9 @@ public static class ConsoleServiceCollectionExtensions
         services.AddEmailConfigurator(Notifications.SendGridSmtpReplaceTemplate)
             .AddReplaceTemplateRenderer()
             .AddSendGridSmtpEmailMessageHandler();
+
+        services.AddEmailConfigurator(Notifications.AzureCommunicationTemplateInDirectory)
+            .AddRazorTemplateRenderer()
+            .AddAzureCommunicationEmailMessageHandler();
     }
 }
